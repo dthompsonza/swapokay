@@ -1,0 +1,306 @@
+{
+  "code": "CHK2026",
+  "name": "Checkers Stickables 2026",
+  "items": [
+    {
+      "code": "ABSA",
+      "name": "Absa",
+      "description": "ABSA",
+      "image": "images/CHK2026/ABSA.svg"
+    },
+    {
+      "code": "ALLGOLD",
+      "name": "All Gold",
+      "description": "All Gold Tomato Sauce Bottle",
+      "image": "images/CHK2026/ALLGOLD.svg"
+    },
+    {
+      "code": "AQUELLE",
+      "name": "aQuellé",
+      "description": "aQuellé Naartjie Flavoured Sparkling Water",
+      "image": "images/CHK2026/AQUELLE.svg"
+    },
+    {
+      "code": "BARONE",
+      "name": "Bar-One",
+      "description": "Bar-One Milk Chocolate Bar",
+      "image": "images/CHK2026/BARONE.svg"
+    },
+    {
+      "code": "BIC",
+      "name": "BIC Kids",
+      "description": "BIC Kids Evolution Stripes Colouring Pencils",
+      "image": "images/CHK2026/BIC.svg"
+    },
+    {
+      "code": "BLACKCAT",
+      "name": "Black Cat",
+      "description": "Black Cat Smooth Peanut Butter",
+      "image": "images/CHK2026/BLACKCAT.svg"
+    },
+    {
+      "code": "BUTRO",
+      "name": "Clover Butro",
+      "description": "Clover Butro Full Cream Modified Butter Spread",
+      "image": "images/CHK2026/BUTRO.svg"
+    },
+    {
+      "code": "CATMOR",
+      "name": "Catmor",
+      "description": "Catmor Chicken Flavoured Dry Cat Food",
+      "image": "images/CHK2026/CATMOR.svg"
+    },
+    {
+      "code": "CLOVERBLISS",
+      "name": "Clover Bliss",
+      "description": "Clover Bliss Choc Chip Double Cream Yoghurt",
+      "image": "images/CHK2026/CLOVERBLISS.svg"
+    },
+    {
+      "code": "CLOVERMILK",
+      "name": "Clover Milk",
+      "description": "Clover UHT Full Cream Milk",
+      "image": "images/CHK2026/CLOVERMILK.svg"
+    },
+    {
+      "code": "COLGATE",
+      "name": "Colgate",
+      "description": "Colgate Total Active Prevention Clean Mint Fluoride Toothpaste",
+      "image": "images/CHK2026/COLGATE.svg"
+    },
+    {
+      "code": "CROSSEBLACKWELL",
+      "name": "Crosse & Blackwell",
+      "description": "Crosse & Blackwell Tangy Mayonnaise",
+      "image": "images/CHK2026/CROSSEBLACKWELL.svg"
+    },
+    {
+      "code": "CROXLEY",
+      "name": "Croxley",
+      "description": "Croxley Mathematical Instruments Set",
+      "image": "images/CHK2026/CROXLEY.svg"
+    },
+    {
+      "code": "DOOM",
+      "name": "Doom",
+      "description": "DOOM Odourless Multi Insects Spray",
+      "image": "images/CHK2026/DOOM.svg"
+    },
+    {
+      "code": "DURACELL",
+      "name": "Duracell",
+      "description": "Duracell Plus AA Alkaline Batteries",
+      "image": "images/CHK2026/DURACELL.svg"
+    },
+    {
+      "code": "ENERGADE",
+      "name": "Energade",
+      "description": "Energade Blueberry Flavoured Sports Drink",
+      "image": "images/CHK2026/ENERGADE.svg"
+    },
+    {
+      "code": "ENERGIZER",
+      "name": "Energizer",
+      "description": "Energizer MAX AA Alkaline Batteries",
+      "image": "images/CHK2026/ENERGIZER.svg"
+    },
+    {
+      "code": "ESKORT",
+      "name": "Eskort",
+      "description": "Eskort Wood Smoked Rindless Streaky Bacon",
+      "image": "images/CHK2026/ESKORT.svg"
+    },
+    {
+      "code": "FORAGEFEAST",
+      "name": "Forage & Feast",
+      "description": "Forage & Feast Cape Fynbos & Wildflower Honey",
+      "image": "images/CHK2026/FORAGEFEAST.svg"
+    },
+    {
+      "code": "GLADE",
+      "name": "Glade",
+      "description": "Glade Scents of Africa Serengeti Oud Scented Mist Air Freshener",
+      "image": "images/CHK2026/GLADE.svg"
+    },
+    {
+      "code": "HANDYANDY",
+      "name": "Handy Andy",
+      "description": "Handy Andy Multi-Purpose Spray",
+      "image": "images/CHK2026/HANDYANDY.svg"
+    },
+    {
+      "code": "HUGGIES",
+      "name": "Huggies",
+      "description": "Huggies Gold Skin Soft Nappies",
+      "image": "images/CHK2026/HUGGIES.svg"
+    },
+    {
+      "code": "JUNGLE",
+      "name": "Jungle",
+      "description": "Jungle Yoghurt Energy Bar",
+      "image": "images/CHK2026/JUNGLE.svg"
+    },
+    {
+      "code": "KELLOGGS",
+      "name": "Kellogg's",
+      "description": "Kellogg's Hot 'n Spicy Mie Goreng Premium Stir Fry Noodles",
+      "image": "images/CHK2026/KELLOGGS.svg"
+    },
+    {
+      "code": "KNORR",
+      "name": "Knorr",
+      "description": "Knorr Carbonara Pasta Pot",
+      "image": "images/CHK2026/KNORR.svg"
+    },
+    {
+      "code": "KRUSH",
+      "name": "Clover Krush",
+      "description": "Clover Krush 100% Orange Fruit Juice Blend",
+      "image": "images/CHK2026/KRUSH.svg"
+    },
+    {
+      "code": "LAAGER",
+      "name": "Laager",
+      "description": "Laager Pure Rooibos Teabags",
+      "image": "images/CHK2026/LAAGER.svg"
+    },
+    {
+      "code": "MAYNARDS",
+      "name": "Maynards",
+      "description": "Maynards Original Wine Gums",
+      "image": "images/CHK2026/MAYNARDS.svg"
+    },
+    {
+      "code": "METALAB",
+      "name": "Metalab",
+      "description": "METALAB BRIDGE Vanilla Milk Premium Whey Protein Blend",
+      "image": "images/CHK2026/METALAB.svg"
+    },
+    {
+      "code": "NEDBANK",
+      "name": "Nedbank",
+      "description": "Nedbank",
+      "image": "images/CHK2026/NEDBANK.svg"
+    },
+    {
+      "code": "NIVEAMEN",
+      "name": "Nivea Men",
+      "description": "NIVEA Men Deep Body Lotion",
+      "image": "images/CHK2026/NIVEAMEN.svg"
+    },
+    {
+      "code": "NIVEAROLLON",
+      "name": "Nivea Roll-On",
+      "description": "NIVEA Roll-On",
+      "image": "images/CHK2026/NIVEAROLLON.svg"
+    },
+    {
+      "code": "OMO",
+      "name": "Omo",
+      "description": "OMO Superlift Auto Washing Liquid",
+      "image": "images/CHK2026/OMO.svg"
+    },
+    {
+      "code": "OROS",
+      "name": "Oros",
+      "description": "Oros Orange Flavoured Concentrated Squash",
+      "image": "images/CHK2026/OROS.svg"
+    },
+    {
+      "code": "PARMALAT",
+      "name": "Parmalat",
+      "description": "Parmalat Cheddar Cheese",
+      "image": "images/CHK2026/PARMALAT.svg"
+    },
+    {
+      "code": "PIEMANS",
+      "name": "Pieman's",
+      "description": "PIEMAN'S BBQ Chicken Pizza Pockets",
+      "image": "images/CHK2026/PIEMANS.svg"
+    },
+    {
+      "code": "REXONA",
+      "name": "Rexona",
+      "description": "Rexona Aerosol",
+      "image": "images/CHK2026/REXONA.svg"
+    },
+    {
+      "code": "RICOFFY",
+      "name": "Ricoffy",
+      "description": "NESCAFÉ RICOFFY Soluble Chicory & Coffee Granules",
+      "image": "images/CHK2026/RICOFFY.svg"
+    },
+    {
+      "code": "ROBERTSONS",
+      "name": "Robertsons",
+      "description": "Robertsons Braai & Grill All-in-One Spice",
+      "image": "images/CHK2026/ROBERTSONS.svg"
+    },
+    {
+      "code": "SIMPLETRUTH",
+      "name": "Simple Truth",
+      "description": "Simple Truth Large Free-Range Eggs",
+      "image": "images/CHK2026/SIMPLETRUTH.svg"
+    },
+    {
+      "code": "SIRFRUIT",
+      "name": "Sir Fruit",
+      "description": "Sir Fruit Orange 100% Fruit Juice Blend",
+      "image": "images/CHK2026/SIRFRUIT.svg"
+    },
+    {
+      "code": "SIXTY60",
+      "name": "Sixty60",
+      "description": "Sixty60 Teal Ride-On Bike with Loadbox",
+      "image": "images/CHK2026/SIXTY60.svg"
+    },
+    {
+      "code": "STANDARDBANK",
+      "name": "Standard Bank",
+      "description": "Standard Bank",
+      "image": "images/CHK2026/STANDARDBANK.svg"
+    },
+    {
+      "code": "STERISTUMPIE",
+      "name": "Steri Stumpie",
+      "description": "Steri Stumpie Chocolate Flavoured Milk",
+      "image": "images/CHK2026/STERISTUMPIE.svg"
+    },
+    {
+      "code": "SUNFOIL",
+      "name": "Sunfoil",
+      "description": "Sunfoil Pure Sunflower Seed Oil",
+      "image": "images/CHK2026/SUNFOIL.svg"
+    },
+    {
+      "code": "SUNSHINED",
+      "name": "Sunshine D",
+      "description": "Sunshine D Original Fat Spread",
+      "image": "images/CHK2026/SUNSHINED.svg"
+    },
+    {
+      "code": "TYPEK",
+      "name": "Typek",
+      "description": "Typek A4 Copy Paper",
+      "image": "images/CHK2026/TYPEK.svg"
+    },
+    {
+      "code": "VASELINE",
+      "name": "Vaseline",
+      "description": "Vaseline Cera Glow Body Gel Oil",
+      "image": "images/CHK2026/VASELINE.svg"
+    },
+    {
+      "code": "WAHL",
+      "name": "Wahl",
+      "description": "Wahl Home Pro Haircutting Kit",
+      "image": "images/CHK2026/WAHL.svg"
+    },
+    {
+      "code": "XTRASAVINGS",
+      "name": "Xtra Savings Card",
+      "description": "Checkers Xtra Savings Card",
+      "image": "images/CHK2026/XTRASAVINGS.svg"
+    }
+  ]
+}
