@@ -26,6 +26,12 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
 - A root `.gitignore` excludes `node_modules/` (plus build/cache output: `dist/`, `.angular/`, `out-tsc/`, and logs).
 - Verification before declaring done: `npm install`, `npm run build` and `npm test` all succeed in PowerShell, and `npm start` serves the app.
 
+## 2b. Deployment (GitHub Pages)
+- Hosted at `https://dthompsonza.github.io/swapokay/` (repo `dthompsonza/swapokay`, project site, so base path `/swapokay/`).
+- GitHub Actions workflow `.github/workflows/deploy.yml`: triggers on push to `main` (and `workflow_dispatch`); runs `npm ci`, `npm test` (headless, non-watch), `npm run build -- --base-href /swapokay/`, copies `index.html` to `404.html`, adds `.nojekyll`, uploads `dist/swapokay/browser` with `actions/upload-pages-artifact`, deploys with `actions/deploy-pages`. Node 22; permissions `contents: read`, `pages: write`, `id-token: write`.
+- One-time manual repo setting: Settings → Pages → Source = "GitHub Actions".
+- Base href is passed only in CI; local `npm start`/`npm run build` keep `/`. Runtime asset/data URLs must stay relative (no leading `/`).
+
 ## 3. Domain terms
 - **CollectibleKind**: a type of collectible set (e.g. Checkers Stickables, code `CHK2026`, 50 items). Defined by JSON on the host server.
 - **Collectable** (home list entry): one entry per CollectibleKind.
@@ -150,3 +156,4 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-27: Added section 2a: project must be buildable/runnable from Windows PowerShell (no Bash dependence); Angular 21 pinned due to Node 22.20; README with PowerShell commands.
 - 2026-10-27: Added real CHK2026 dataset (50 items; code/short name/full description); item model changed from `id`/`name` to `code`/`name`/`description`; image path now `images/CHK2026/{CODE}.png`; kind name "Checkers Stickables 2026".
 - 2026-10-27: Added root `.gitignore` requirement (excludes `node_modules/`, `dist/`, `.angular/`, `out-tsc/`, logs).
+- 2026-10-29: Added section 2b: deploy to GitHub Pages via GitHub Actions on every push to `main`.
