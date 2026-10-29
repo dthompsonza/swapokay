@@ -17,13 +17,13 @@ import { Modal } from './modal';
         <p>Possible swaps: <strong>{{ r.swaps }}</strong></p>
         <h3>You can give ({{ r.give.length }})</h3>
         @for (e of r.give; track e.item.code) {
-          <div class="row"><img [src]="e.item.image" alt="" /><span>{{ e.item.name }}</span><b>×{{ e.quantity }}</b></div>
+          <div class="row"><img [src]="e.item.icon" alt="" /><span>{{ e.item.name }}</span><b>×{{ e.quantity }}</b></div>
         } @empty {
           <p class="muted">Nothing to give.</p>
         }
         <h3>You can receive ({{ r.receive.length }})</h3>
         @for (e of r.receive; track e.item.code) {
-          <div class="row"><img [src]="e.item.image" alt="" /><span>{{ e.item.name }}</span><b>×{{ e.quantity }}</b></div>
+          <div class="row"><img [src]="e.item.icon" alt="" /><span>{{ e.item.name }}</span><b>×{{ e.quantity }}</b></div>
         } @empty {
           <p class="muted">Nothing to receive.</p>
         }

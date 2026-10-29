@@ -11,6 +11,7 @@ export interface CollectibleItem {
   name: string;
   description: string;
   image: string;
+  icon: string;
 }
 
 export interface CollectibleKind {

@@ -32,7 +32,7 @@ type Dialog = 'qr' | 'compare' | 'rename' | 'delete' | null;
         @for (item of k.items; track item.code; let i = $index) {
           <div class="cell">
             <button type="button" class="icon" [attr.aria-label]="'Add one ' + item.name + ', current count ' + counts()[i]" (click)="bump(i)">
-              <img [src]="item.image" alt="" />
+              <img [src]="item.icon" alt="" />
               <span class="badge" [class.zero]="counts()[i] === 0">{{ counts()[i] }}</span>
             </button>
             <button type="button" class="name" (click)="selected.set(i)">{{ item.name }}</button>

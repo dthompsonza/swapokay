@@ -34,7 +34,7 @@ describe('codec', () => {
 });
 
 describe('computeSwap', () => {
-  const items: CollectibleItem[] = ['A', 'B', 'C', 'D'].map((c) => ({ code: c, name: c, description: c, image: '' }));
+  const items: CollectibleItem[] = ['A', 'B', 'C', 'D'].map((c) => ({ code: c, name: c, description: c, image: '', icon: '' }));
 
   it('keeps one spare and only trades missing items', () => {
     const r = computeSwap(items, [3, 1, 0, 2], [0, 0, 4, 1]);

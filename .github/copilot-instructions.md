@@ -39,10 +39,10 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
 
 ## 4. CollectibleKind data (server JSON, static assets)
 - Index: `public/data/kinds.json` → `[{ "code": "CHK2026", "name": "Checkers Stickables", "file": "CHK2026.json" }]`
-- Kind file: `public/data/CHK2026.json` → `{ "code": "CHK2026", "name": "Checkers Stickables 2026", "items": [{ "code": "ABSA", "name": "Absa", "description": "ABSA", "image": "images/CHK2026/ABSA.png" }, ... 50 items] }`
+- Kind file: `public/data/CHK2026.json` → `{ "code": "CHK2026", "name": "Checkers Stickables 2026", "items": [{ "code": "ABSA", "name": "Absa", "description": "ABSA", "image": "images/CHK2026/ABSA.png", "icon": "images/CHK2026/icons/ABSA.png" }, ... 50 items] }`
   - `code` = unique item code (from dataset), `name` = short description (shown under the icon in the grid), `description` = full description (shown under the large image in the modal).
 - Item order in `items` defines byte position in the encoded string. Never reorder/remove items of a published kind.
-- Images in `public/images/CHK2026/{CODE}.<ext>`; the item's `image` field in the JSON is the source of truth for the path. **Placeholder images are generated `.svg` files** (coloured circle, initials, item number) until real images (e.g. `.png`) are supplied; swapping them only requires replacing the file and updating `image` in `CHK2026.json`.
+- Images in `public/images/CHK2026/{CODE}.png` (480×480, "full size", used in the item modal) and `public/images/CHK2026/icons/{CODE}.png` (124×124, used in the collection grid and compare lists). Each item's JSON has `image` (full) and `icon` (icon) paths, which are the source of truth. The SVG placeholders are removed.
 - **CHK2026 dataset (50 items, in byte order = this order; format `CODE | short | full`):**
   1. ABSA | Absa | ABSA
   2. ALLGOLD | All Gold | All Gold Tomato Sauce Bottle
@@ -150,7 +150,7 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - Name validation and codec logic live in one place (`collection-codec.ts`) and are reused everywhere.
 
 ## 11. Open items
-- Real item images (names/descriptions now provided; placeholders used for images).
+- Real item images supplied (placeholders removed); visual design/branding otherwise open.
 - Visual design/branding not yet specified.
 
 ## 12. Change Log
@@ -161,3 +161,4 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-27: Added root `.gitignore` requirement (excludes `node_modules/`, `dist/`, `.angular/`, `out-tsc/`, logs).
 - 2026-10-29: Added section 2b: deploy to GitHub Pages via GitHub Actions on every push to `main`.
 - 2026-10-29: Home page shows each kind as a responsive image card (`srcset`, widths 400/600/800) instead of text; `kinds.json` gains `image` + `imageWidths`.
+- 2026-10-29: Real item images (PNG): 480×480 full size for the modal, 124×124 icons in `icons/` for grid/compare; items gain an `icon` field; SVG placeholders removed.
