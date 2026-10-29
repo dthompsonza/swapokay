@@ -1,5 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { base64ToCounts, clampCount, countsToBase64, encodeCollection } from './collection-codec';
+import { isValidIcon, randomIcon } from './collection-icons';
 import { StoredCollection } from './models';
 
 const STORAGE_KEY = 'swapokay.collections.v1';
@@ -21,11 +22,12 @@ export class CollectionStore {
     return this.all().filter((c) => c.kind === kind).map((c) => c.name);
   }
 
-  add(kind: string, name: string, itemCount: number): void {
+  add(kind: string, name: string, itemCount: number, icon: string): void {
     const entry: StoredCollection = {
       kind,
       name: name.trim(),
       data: countsToBase64(new Array<number>(itemCount).fill(0)),
+      icon,
       updated: new Date().toISOString(),
     };
     this.save([...this.all(), entry]);
@@ -39,9 +41,9 @@ export class CollectionStore {
     this.replace(current, { ...current, data: countsToBase64(counts), updated: new Date().toISOString() });
   }
 
-  rename(kind: string, name: string, newName: string): void {
+  edit(kind: string, name: string, newName: string, icon: string): void {
     const current = this.get(kind, name);
-    if (current) this.replace(current, { ...current, name: newName.trim(), updated: new Date().toISOString() });
+    if (current) this.replace(current, { ...current, name: newName.trim(), icon, updated: new Date().toISOString() });
   }
 
   remove(kind: string, name: string): void {
@@ -50,7 +52,7 @@ export class CollectionStore {
   }
 
   encoded(collection: StoredCollection): string {
-    return encodeCollection(collection.kind, collection.name, base64ToCounts(collection.data) ?? []);
+    return encodeCollection(collection.kind, collection.name, base64ToCounts(collection.data) ?? [], collection.icon);
   }
 
   private replace(old: StoredCollection, next: StoredCollection): void {
@@ -70,10 +72,24 @@ export class CollectionStore {
     try {
       const parsed: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
       if (!Array.isArray(parsed)) return [];
-      return parsed.filter(
+      const valid = parsed.filter(
         (c): c is StoredCollection =>
           !!c && typeof c.kind === 'string' && typeof c.name === 'string' && typeof c.data === 'string' && typeof c.updated === 'string',
       );
+      let migrated = false;
+      const result = valid.map((c) => {
+        if (typeof c.icon === 'string' && isValidIcon(c.icon)) return c;
+        migrated = true;
+        return { ...c, icon: randomIcon() };
+      });
+      if (migrated) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(result));
+        } catch {
+          // Ignore; icons are reassigned next load.
+        }
+      }
+      return result;
     } catch {
       return [];
     }

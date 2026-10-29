@@ -16,6 +16,16 @@ describe('codec', () => {
     expect(r.ok && r.value.counts).toEqual(counts);
   });
 
+  it('round-trips the icon and accepts icon-less strings', () => {
+    const text = encodeCollection('CHK2026', 'A', [1, 2, 3], 'line-design-07.svg');
+    expect(text.endsWith('^line-design-07.svg')).toBe(true);
+    const r = decodeCollection(text, 'CHK2026', 3);
+    expect(r.ok && r.value.icon).toBe('line-design-07.svg');
+    const old = decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3]), 'CHK2026', 3);
+    expect(old.ok && old.value.icon).toBeNull();
+    expect(decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3], 'bad.svg'), 'CHK2026', 3).ok).toBe(false);
+  });
+
   it('rejects wrong kind, bad shape, corrupt data and wrong length', () => {
     const text = encodeCollection('CHK2026', 'A', [1, 2, 3]);
     expect(decodeCollection(text, 'OTHER', 3).ok).toBe(false);

@@ -24,5 +24,6 @@ export interface StoredCollection {
   kind: string;
   name: string;
   data: string;
+  icon: string;
   updated: string;
 }

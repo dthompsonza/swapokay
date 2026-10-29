@@ -1,4 +1,7 @@
+import { isValidIcon } from './collection-icons';
+
 export const NAME_MAX = 30;
+export const DEFAULT_NAME = 'My Collection';
 export const COUNT_MIN = 0;
 export const COUNT_MAX = 255;
 const SEP = '^';
@@ -39,20 +42,23 @@ export function base64ToCounts(data: string): number[] | null {
   }
 }
 
-export function encodeCollection(kind: string, name: string, counts: readonly number[]): string {
-  return [kind, name, countsToBase64(counts)].join(SEP);
+export function encodeCollection(kind: string, name: string, counts: readonly number[], icon?: string): string {
+  const parts = [kind, name, countsToBase64(counts)];
+  if (icon) parts.push(icon);
+  return parts.join(SEP);
 }
 
 export interface DecodedCollection {
   kind: string;
   name: string;
   counts: number[];
+  icon: string | null;
 }
 
 export function decodeCollection(text: string, expectedKind: string, itemCount: number): Result<DecodedCollection> {
   const parts = text.trim().split(SEP);
-  if (parts.length !== 3) return { ok: false, error: 'This is not a valid collection code.' };
-  const [kind, name, data] = parts;
+  if (parts.length !== 3 && parts.length !== 4) return { ok: false, error: 'This is not a valid collection code.' };
+  const [kind, name, data, icon = null] = parts;
   if (kind !== expectedKind) {
     return { ok: false, error: `This collection is for "${kind}", not "${expectedKind}". You can only compare collections of the same kind.` };
   }
@@ -60,5 +66,6 @@ export function decodeCollection(text: string, expectedKind: string, itemCount: 
   const counts = base64ToCounts(data);
   if (!counts) return { ok: false, error: 'The collection data in this code is corrupt.' };
   if (counts.length !== itemCount) return { ok: false, error: 'The collection data does not match this kind.' };
-  return { ok: true, value: { kind, name, counts } };
+  if (icon !== null && !isValidIcon(icon)) return { ok: false, error: 'The collection icon in this code is invalid.' };
+  return { ok: true, value: { kind, name, counts, icon } };
 }
