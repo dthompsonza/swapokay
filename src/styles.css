@@ -10,6 +10,12 @@ a { color: #0b5ed7; }
 .list { list-style: none; padding: 0; margin: 0 0 1rem; }
 .list li { border-bottom: 1px solid #e5e5e5; }
 .list a { display: block; padding: 0.9rem 0.25rem; min-height: 44px; text-decoration: none; }
+.kind-cards { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 1rem; }
+.kind-cards li { max-width: 800px; margin: 0 auto; width: 100%; }
+.kind-cards a { display: block; min-height: 44px; text-decoration: none; color: inherit; border-radius: 12px; }
+.kind-cards a:focus-visible { outline: 3px solid #0b5ed7; outline-offset: 2px; }
+.kind-cards img { display: block; width: 100%; height: auto; border-radius: 12px; }
+.kind-cards .caption { display: block; padding: 0.5rem 0.25rem; font-weight: 600; text-align: center; }
 .muted { color: #666; padding: 0.9rem 0.25rem; }
 .error { color: #b00020; }
 label { font-weight: 600; }

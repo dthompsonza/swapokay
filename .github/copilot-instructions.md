@@ -97,7 +97,10 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
 - Fetched with `HttpClient` at runtime (relative URLs); cached in memory.
 
 ## 5. Screens / behaviour
-1. **Home (`/`)**: list of Collectables (from `kinds.json`; one for now). Selecting one → Kind page.
+1. **Home (`/`)**: list of Collectables (from `kinds.json`; one for now), each shown as a **responsive picture card** (the kind's image, no text list; the kind name is the image `alt`/accessible label and visible caption below the image). Selecting one → Kind page.
+   - `kinds.json` entries gain `"image": "images/CHK2026/chk2026"` (base path, no width/extension) and `"imageWidths": [400, 600, 800]`; files are `{image}-{width}.jpg` (e.g. `images/CHK2026/chk2026-800.jpg`, 16:9, 800×450 provided). `KindSummary` gains `image` and `imageWidths`.
+   - Rendered as `<img>` with `srcset` (`{base}-{w}.jpg {w}w`), `sizes="(min-width: 800px) 800px, 100vw"`, `width`/`height` 800×450 attributes (no layout shift), `loading="lazy"`, card max-width 800px, centred; the whole card is a link (min 44px target, keyboard focus style).
+   - Image sizes per kind: 400×225, 600×338, 800×450 (all three supplied for CHK2026); the 800 is the `src` fallback.
 2. **Kind page (`/kind/:code`)**: lists the user's Collections for that kind (empty state message when none) and an **Add Collection** button.
 3. **Add Collection – step 1 (`/kind/:code/new`)**: name input, max 30 chars, Next disabled until valid.
    - Valid: trimmed, 1–30 chars, only `[A-Za-z0-9 ]`, unique within the kind (case-insensitive). Show inline errors.
@@ -157,3 +160,4 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-27: Added real CHK2026 dataset (50 items; code/short name/full description); item model changed from `id`/`name` to `code`/`name`/`description`; image path now `images/CHK2026/{CODE}.png`; kind name "Checkers Stickables 2026".
 - 2026-10-27: Added root `.gitignore` requirement (excludes `node_modules/`, `dist/`, `.angular/`, `out-tsc/`, logs).
 - 2026-10-29: Added section 2b: deploy to GitHub Pages via GitHub Actions on every push to `main`.
+- 2026-10-29: Home page shows each kind as a responsive image card (`srcset`, widths 400/600/800) instead of text; `kinds.json` gains `image` + `imageWidths`.

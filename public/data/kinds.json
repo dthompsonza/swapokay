@@ -2,6 +2,8 @@
   {
     "code": "CHK2026",
     "name": "Checkers Stickables 2026",
-    "file": "CHK2026.json"
+    "file": "CHK2026.json",
+    "image": "images/CHK2026/chk2026",
+    "imageWidths": [400, 600, 800]
   }
 ]

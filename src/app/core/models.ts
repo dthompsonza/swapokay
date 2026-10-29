@@ -2,6 +2,8 @@ export interface KindSummary {
   code: string;
   name: string;
   file: string;
+  image: string;
+  imageWidths: number[];
 }
 
 export interface CollectibleItem {
