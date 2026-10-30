@@ -102,6 +102,7 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
    - Rendered as `<img>` with `srcset` (`{base}-{w}.jpg {w}w`), `sizes="(min-width: 800px) 800px, 100vw"`, `width`/`height` 800×450 attributes (no layout shift), `loading="lazy"`, card max-width 800px, centred; the whole card is a link (min 44px target, keyboard focus style).
    - Image sizes per kind: 400×225, 600×338, 800×450 (all three supplied for CHK2026); the 800 is the `src` fallback.
 2. **Kind page (`/kind/:code`)**: lists the user's Collections for that kind (empty state message when none) and an **Add Collection** button.
+   - Each collection row shows, on the same line as the name and right-aligned, plain non-clickable text `unique/total`: unique = number of items with count > 0, total = sum of all counts (e.g. 10 items of which 3 distinct -> `3/10`). Only the name (and its icon) remains the link to the collection page.
 3. **Add Collection – step 1 (`/kind/:code/new`)**: 
    - If no collection named `My Collection` (case-insensitive) exists for the kind, the Add Collection button skips the name step: it creates `My Collection` with a **randomly chosen icon** and goes straight to the collection page.
    - If `My Collection` already exists, show the name step: name input (max 30 chars, Next disabled until valid) plus an icon picker (48 icons, random one preselected). Label `Collection name` has clear vertical spacing (≥ 0.5rem) from its input.
@@ -113,7 +114,8 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
    - Tap/click name → **modal**: larger image, name underneath, count text field with **"−"** to the left and **"+"** to the right (±1). Bounds 0–255; typed input is sanitised/clamped to integers 0–255.
    - Collection is saved to localStorage when step 1 completes and on every change.
    - No Rename button. A **pencil icon button** (aria-label "Edit collection") sits to the right of the collection name and opens an **edit modal** to change the name (same name rules; unchanged own name is allowed) and pick a different icon from the 50 (current one selected). Save/Cancel.
-   - Actions: Delete (confirm dialog), Show QR, Scan QR (compare).
+   - Under the collection name (title row) a smaller dark-gray line shows the same `unique/total` stats as the kind page; it updates live as counts change. The stats calculation lives in one place (`collection-codec.ts`) and is reused by the kind page.
+   - Actions: Show QR, Scan QR (compare). There is no Delete button on the collection view; deleting is done from the edit modal: a trash icon button (aria-label "Delete collection", min 44px) sits to the right of the name input; it opens a confirm dialog ("Delete {name}? This cannot be undone." Delete/Cancel); on confirm the collection is removed from localStorage and the app navigates back to the kind page, which refreshes the list.
 5. **Show QR**: modal rendering the collection's encoded string as a QR code (plus the text string and a copy button). The QR is generated with error correction level `H` and the collection's icon is drawn at the centre (about 22% of the QR width, on a white rounded backing square) so it stays scannable. The QR image is rendered to a canvas and shown as an image.
 6. **Scan QR / Compare**: opened from within a collection; scans via camera (fallback: paste the string). Decodes the other string, then:
    - If kind code differs from the current collection's kind → **reject with error message**.
@@ -170,3 +172,6 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-29: Encoded string/QR now includes the collection icon as a 4th segment (3-segment strings still accepted).
 - 2026-10-30: Collection icons are now 48 files `XX.svg` (ids 01–48); stored/encoded as the id only (`.svg` assumed). Encoded string changed to `Base64(KINDCODE^Name^Icon)^Base64(counts)` (obfuscated header, icon after name); old formats dropped; old stored icon values re-randomised.
 - 2026-10-30: Show QR now overlays the collection's icon at the centre of the QR code (EC level H).
+- 2026-10-30: Delete moved from the collection view into the edit modal (trash icon right of the name input, with confirm).
+- 2026-10-30: Kind page collection rows show right-aligned `unique/total` stats text.
+- 2026-10-30: Collection view shows live `unique/total` stats under the name (dark gray, small); stats helper shared in the codec.

@@ -42,6 +42,11 @@ export function base64ToCounts(data: string): number[] | null {
   }
 }
 
+/** Returns "unique/total": items with a count above 0 over the sum of all counts. */
+export function collectionStats(counts: readonly number[]): string {
+  return `${counts.filter((n) => n > 0).length}/${counts.reduce((a, b) => a + b, 0)}`;
+}
+
 export function encodeCollection(kind: string, name: string, counts: readonly number[], icon: string): string {
   return btoa([kind, name, icon].join(SEP)) + SEP + countsToBase64(counts);
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { COUNT_MAX, NAME_MAX, base64ToCounts, validateName } from '../core/collection-codec';
+import { COUNT_MAX, NAME_MAX, base64ToCounts, collectionStats, validateName } from '../core/collection-codec';
 import { iconPath, randomIcon } from '../core/collection-icons';
 import { CollectionStore } from '../core/collection-store';
 import { KindService } from '../core/kind.service';
@@ -28,10 +28,10 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
         <span>{{ name() }}</span>
         <button type="button" class="pencil" aria-label="Edit collection" (click)="openEdit()">✎</button>
       </h1>
+      <p class="stats" aria-label="Unique items out of total items">{{ stats() }}</p>
       <div class="actions">
         <button type="button" (click)="dialog.set('qr')">Show QR</button>
         <button type="button" (click)="dialog.set('compare')">Scan QR</button>
-        <button type="button" (click)="dialog.set('delete')">Delete</button>
       </div>
       <div class="grid">
         @for (item of k.items; track item.code; let i = $index) {
@@ -59,7 +59,10 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
           <app-modal title="Edit collection" (closed)="dialog.set(null)">
             <form (submit)="save($event)">
               <label for="newname">Collection name</label>
-              <input id="newname" type="text" autocomplete="off" [attr.maxlength]="maxLength" [value]="newName()" (input)="newName.set($any($event.target).value)" />
+              <div class="namerow">
+                <input id="newname" type="text" autocomplete="off" [attr.maxlength]="maxLength" [value]="newName()" (input)="newName.set($any($event.target).value)" />
+                <button type="button" class="trash" aria-label="Delete collection" (click)="dialog.set('delete')">🗑</button>
+              </div>
               @if (renameError()) {
                 <p class="error" role="alert">{{ renameError() }}</p>
               }
@@ -96,7 +99,11 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
     input[type='text'] { min-height: 44px; padding: 0 0.75rem; box-sizing: border-box; }
     .title { display: flex; align-items: center; gap: 0.5rem; }
     .cicon { width: 2.5rem; height: 2.5rem; }
+    .stats { margin: -0.5rem 0 1rem; font-size: 0.85rem; color: #555; }
     .pencil { width: 44px; height: 44px; border: 0; background: none; font-size: 1.4rem; cursor: pointer; }
+    .namerow { display: flex; gap: 0.5rem; align-items: center; }
+    .namerow input { flex: 1; min-width: 0; }
+    .trash { width: 44px; height: 44px; border: 0; background: none; font-size: 1.4rem; cursor: pointer; }
   `,
 })
 export class CollectionPage {
@@ -121,6 +128,7 @@ export class CollectionPage {
     const c = this.collection();
     return (c && base64ToCounts(c.data)) || [];
   });
+  protected readonly stats = computed(() => collectionStats(this.counts()));
   protected readonly encoded = computed(() => {
     const c = this.collection();
     return c ? this.store.encoded(c) : '';
