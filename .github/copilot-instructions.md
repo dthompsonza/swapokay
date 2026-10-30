@@ -104,9 +104,9 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
 2. **Kind page (`/kind/:code`)**: lists the user's Collections for that kind (empty state message when none) and an **Add Collection** button.
 3. **Add Collection – step 1 (`/kind/:code/new`)**: 
    - If no collection named `My Collection` (case-insensitive) exists for the kind, the Add Collection button skips the name step: it creates `My Collection` with a **randomly chosen icon** and goes straight to the collection page.
-   - If `My Collection` already exists, show the name step: name input (max 30 chars, Next disabled until valid) plus an icon picker (50 icons, random one preselected). Label `Collection name` has clear vertical spacing (≥ 0.5rem) from its input.
+   - If `My Collection` already exists, show the name step: name input (max 30 chars, Next disabled until valid) plus an icon picker (48 icons, random one preselected). Label `Collection name` has clear vertical spacing (≥ 0.5rem) from its input.
    - Valid name: trimmed, 1–30 chars, only `[A-Za-z0-9 ]`, unique within the kind (case-insensitive). Show inline errors.
-   - Collection icons: the 50 SVGs `public/images/collection-icons/line-design-01.svg` … `line-design-50.svg`. The list is defined in one place (`core/collection-icons.ts`) as relative paths (`images/collection-icons/line-design-NN.svg`). Each collection stores one icon (`icon` = file name, e.g. `line-design-07.svg`). The icon is part of the encoded string/QR (section 6). Existing collections without an icon get a random one assigned and saved on load. The icon is shown next to the collection name on the collection page and in the kind page collection list.
+  - Collection icons: the 48 SVGs `public/images/collection-icons/01.svg` … `48.svg` (file names are a unique two-digit id `XX`; old `line-design-NN.svg` files are removed). The list is defined in one place (`core/collection-icons.ts`) as ids (`01`…`48`); the path is `images/collection-icons/{XX}.svg` (`.svg` is always assumed). Each collection stores one icon (`icon` = the id `XX`, e.g. `07`). The icon is part of the encoded string/QR (section 6). Existing collections without a valid icon (including old `line-design-NN.svg` values) get a random one assigned and saved on load. The icon is shown next to the collection name on the collection page and in the kind page collection list.
 4. **Add Collection – step 2 / Collection page (`/kind/:code/c/:name`)**: grid of all items, **invisible grid lines** (no borders), responsive columns.
    - Each cell: item icon with a **count badge** (starts `0`), item name underneath.
    - Tap icon → count +1 (max 255; at 255 do nothing/visual hint).
@@ -114,18 +114,18 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
    - Collection is saved to localStorage when step 1 completes and on every change.
    - No Rename button. A **pencil icon button** (aria-label "Edit collection") sits to the right of the collection name and opens an **edit modal** to change the name (same name rules; unchanged own name is allowed) and pick a different icon from the 50 (current one selected). Save/Cancel.
    - Actions: Delete (confirm dialog), Show QR, Scan QR (compare).
-5. **Show QR**: modal rendering the collection's encoded string as a QR code (plus the text string and a copy button).
+5. **Show QR**: modal rendering the collection's encoded string as a QR code (plus the text string and a copy button). The QR is generated with error correction level `H` and the collection's icon is drawn at the centre (about 22% of the QR width, on a white rounded backing square) so it stays scannable. The QR image is rendered to a canvas and shown as an image.
 6. **Scan QR / Compare**: opened from within a collection; scans via camera (fallback: paste the string). Decodes the other string, then:
    - If kind code differs from the current collection's kind → **reject with error message**.
    - If invalid/corrupt → error message.
    - Otherwise show the result (see section 7).
 
 ## 6. Storage & encoding
-- Encoded collection string: `KINDCODE^Name^Base64^Icon` e.g. `CHK2026^My Stickers^AAAAAAo...^line-design-07.svg`
-  - Segment 1: kind code. Segment 2: collection name (alphanumeric + spaces only, so `^` can never appear). Segment 3: standard Base64 of a byte array, **one byte per item** in kind item order (value 0–255). 50 items → 50 bytes. Segment 4: icon file name (one of the 50 collection icons; no `^`). For backward compatibility a 3-segment string (no icon) is still accepted and decoded with no icon (the importer/UI assigns a random one when saving or displaying).
+- Encoded collection string: `Base64(KINDCODE^Name^Icon)^Base64(counts)` e.g. `Q0hLMjAyNl5NeSBTdGlja2Vyc14wNw==^AAAAAAo...` (header is `CHK2026^My Stickers^07`).
+  - Part 1 (obfuscated header): standard Base64 of UTF-8 text `KINDCODE^Name^Icon` (kind code; collection name, alphanumeric + spaces only so `^` never appears; icon id `XX` only, no `.svg`). Separator `^` (Base64 never contains `^`). Part 2: standard Base64 of a byte array, **one byte per item** in kind item order (value 0–255); 50 items → 50 bytes. The old plain formats (`KIND^Name^Base64[^Icon]`) are no longer supported.
   - Example (3 items, 10 of the 2nd): bytes `00 0A 00`.
-- Decoding validates: 3 or 4 segments, icon (if present) is one of the known collection icons, matching kind code, valid name, valid Base64, byte length == item count of the kind.
-- localStorage key `swapokay.collections.v1`: JSON array of `{ "kind": "CHK2026", "name": "...", "data": "<base64>", "icon": "line-design-07.svg", "updated": "<ISO date>" }` (full string derived via the codec; no duplicate storage format).
+- Decoding validates: exactly 2 `^` parts, header Base64 decodes to exactly 3 `^` segments, icon is one of the known icon ids, matching kind code, valid name, valid Base64 counts, byte length == item count of the kind.
+- localStorage key `swapokay.collections.v1`: JSON array of `{ "kind": "CHK2026", "name": "...", "data": "<base64>", "icon": "07", "updated": "<ISO date>" }` (full string derived via the codec; no duplicate storage format).
 - Single `CollectionStore` service (signals) owns all reads/writes; handle missing/corrupt localStorage gracefully.
 
 ## 7. Compare / swap rules
@@ -165,5 +165,8 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-27: Added root `.gitignore` requirement (excludes `node_modules/`, `dist/`, `.angular/`, `out-tsc/`, logs).
 - 2026-10-29: Added section 2b: deploy to GitHub Pages via GitHub Actions on every push to `main`.
 - 2026-10-29: Home page shows each kind as a responsive image card (`srcset`, widths 400/600/800) instead of text; `kinds.json` gains `image` + `imageWidths`.
-- 2026-10-29: Real item images (PNG): 480×480 full size for the modal, 124×124 icons in `icons/` for grid/compare; items gain an `icon` field; SVG placeholders removed.- 2026-10-29: Collections get an icon (50 SVGs in collection-icons); default name 'My Collection' with random icon, name step only if taken; Rename button replaced by pencil icon opening an edit modal (name + icon); label/input spacing fixed.
+- 2026-10-29: Real item images (PNG): 480×480 full size for the modal, 124×124 icons in `icons/` for grid/compare; items gain an `icon` field; SVG placeholders removed.
+- 2026-10-29: Collections get an icon (50 SVGs in collection-icons); default name 'My Collection' with random icon, name step only if taken; Rename button replaced by pencil icon opening an edit modal (name + icon); label/input spacing fixed.
 - 2026-10-29: Encoded string/QR now includes the collection icon as a 4th segment (3-segment strings still accepted).
+- 2026-10-30: Collection icons are now 48 files `XX.svg` (ids 01–48); stored/encoded as the id only (`.svg` assumed). Encoded string changed to `Base64(KINDCODE^Name^Icon)^Base64(counts)` (obfuscated header, icon after name); old formats dropped; old stored icon values re-randomised.
+- 2026-10-30: Show QR now overlays the collection's icon at the centre of the QR code (EC level H).

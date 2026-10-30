@@ -50,7 +50,7 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
       }
       @switch (dialog()) {
         @case ('qr') {
-          <app-qr-show [text]="encoded()" (closed)="dialog.set(null)" />
+          <app-qr-show [text]="encoded()" [icon]="collection()?.icon ?? ''" (closed)="dialog.set(null)" />
         }
         @case ('compare') {
           <app-compare [kindCode]="code()" [items]="k.items" [mine]="counts()" (closed)="dialog.set(null)" />

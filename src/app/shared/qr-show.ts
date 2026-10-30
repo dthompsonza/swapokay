@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, input, output, signal } from '@angular/core';
 import * as QRCode from 'qrcode';
+import { iconPath } from '../core/collection-icons';
 import { Modal } from './modal';
 
 @Component({
@@ -27,12 +28,41 @@ import { Modal } from './modal';
 })
 export class QrShow implements OnInit {
   readonly text = input.required<string>();
+  readonly icon = input('');
   readonly closed = output<void>();
   protected readonly dataUrl = signal('');
   protected readonly copied = signal(false);
 
   async ngOnInit(): Promise<void> {
-    this.dataUrl.set(await QRCode.toDataURL(this.text(), { errorCorrectionLevel: 'M', margin: 2, width: 400 }));
+    const size = 400;
+    const canvas = document.createElement('canvas');
+    await QRCode.toCanvas(canvas, this.text(), { errorCorrectionLevel: 'H', margin: 2, width: size });
+    const ctx = canvas.getContext('2d');
+    if (ctx && this.icon()) {
+      try {
+        const img = await this.loadImage(iconPath(this.icon()));
+        const box = Math.round(size * 0.22);
+        const pad = Math.round(box * 0.12);
+        const x = Math.round((size - box) / 2);
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.roundRect(x - pad, x - pad, box + pad * 2, box + pad * 2, pad);
+        ctx.fill();
+        ctx.drawImage(img, x, x, box, box);
+      } catch {
+        // Icon failed to load; the plain QR code is still valid.
+      }
+    }
+    this.dataUrl.set(canvas.toDataURL('image/png'));
+  }
+
+  private loadImage(src: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('icon load failed'));
+      img.src = src;
+    });
   }
 
   protected async copy(): Promise<void> {

@@ -1,12 +1,12 @@
-const COUNT = 50;
+const COUNT = 48;
 
 export const COLLECTION_ICONS: readonly string[] = Array.from(
   { length: COUNT },
-  (_, i) => `line-design-${String(i + 1).padStart(2, '0')}.svg`,
+  (_, i) => String(i + 1).padStart(2, '0'),
 );
 
 export function iconPath(icon: string): string {
-  return `images/collection-icons/${icon}`;
+  return `images/collection-icons/${icon}.svg`;
 }
 
 export function isValidIcon(icon: string): boolean {

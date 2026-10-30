@@ -42,23 +42,31 @@ export function base64ToCounts(data: string): number[] | null {
   }
 }
 
-export function encodeCollection(kind: string, name: string, counts: readonly number[], icon?: string): string {
-  const parts = [kind, name, countsToBase64(counts)];
-  if (icon) parts.push(icon);
-  return parts.join(SEP);
+export function encodeCollection(kind: string, name: string, counts: readonly number[], icon: string): string {
+  return btoa([kind, name, icon].join(SEP)) + SEP + countsToBase64(counts);
 }
 
 export interface DecodedCollection {
   kind: string;
   name: string;
   counts: number[];
-  icon: string | null;
+  icon: string;
 }
 
 export function decodeCollection(text: string, expectedKind: string, itemCount: number): Result<DecodedCollection> {
-  const parts = text.trim().split(SEP);
-  if (parts.length !== 3 && parts.length !== 4) return { ok: false, error: 'This is not a valid collection code.' };
-  const [kind, name, data, icon = null] = parts;
+  const invalid: Result<DecodedCollection> = { ok: false, error: 'This is not a valid collection code.' };
+  const outer = text.trim().split(SEP);
+  if (outer.length !== 2 || outer[0].length % 4 !== 0 || !BASE64_PATTERN.test(outer[0])) return invalid;
+  let header: string;
+  try {
+    header = atob(outer[0]);
+  } catch {
+    return invalid;
+  }
+  const inner = header.split(SEP);
+  if (inner.length !== 3) return invalid;
+  const [kind, name, icon] = inner;
+  const data = outer[1];
   if (kind !== expectedKind) {
     return { ok: false, error: `This collection is for "${kind}", not "${expectedKind}". You can only compare collections of the same kind.` };
   }
@@ -66,6 +74,6 @@ export function decodeCollection(text: string, expectedKind: string, itemCount: 
   const counts = base64ToCounts(data);
   if (!counts) return { ok: false, error: 'The collection data in this code is corrupt.' };
   if (counts.length !== itemCount) return { ok: false, error: 'The collection data does not match this kind.' };
-  if (icon !== null && !isValidIcon(icon)) return { ok: false, error: 'The collection icon in this code is invalid.' };
+  if (!isValidIcon(icon)) return { ok: false, error: 'The collection icon in this code is invalid.' };
   return { ok: true, value: { kind, name, counts, icon } };
 }

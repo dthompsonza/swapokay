@@ -8,32 +8,26 @@ describe('codec', () => {
     expect(base64ToCounts('AAoA')).toEqual([0, 10, 0]);
   });
 
-  it('round-trips a collection string', () => {
+  it('round-trips a collection string with obfuscated header and icon', () => {
     const counts = Array.from({ length: 50 }, (_, i) => i * 5);
-    const text = encodeCollection('CHK2026', 'My Stickers', counts);
-    expect(text.startsWith('CHK2026^My Stickers^')).toBe(true);
+    const text = encodeCollection('CHK2026', 'My Stickers', counts, '07');
+    expect(text.startsWith(btoa('CHK2026^My Stickers^07') + '^')).toBe(true);
     const r = decodeCollection(text, 'CHK2026', 50);
     expect(r.ok && r.value.counts).toEqual(counts);
+    expect(r.ok && r.value.icon).toBe('07');
+    expect(r.ok && r.value.name).toBe('My Stickers');
   });
 
-  it('round-trips the icon and accepts icon-less strings', () => {
-    const text = encodeCollection('CHK2026', 'A', [1, 2, 3], 'line-design-07.svg');
-    expect(text.endsWith('^line-design-07.svg')).toBe(true);
-    const r = decodeCollection(text, 'CHK2026', 3);
-    expect(r.ok && r.value.icon).toBe('line-design-07.svg');
-    const old = decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3]), 'CHK2026', 3);
-    expect(old.ok && old.value.icon).toBeNull();
-    expect(decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3], 'bad.svg'), 'CHK2026', 3).ok).toBe(false);
-  });
-
-  it('rejects wrong kind, bad shape, corrupt data and wrong length', () => {
-    const text = encodeCollection('CHK2026', 'A', [1, 2, 3]);
+  it('rejects wrong kind, bad shape, bad icon, corrupt data and wrong length', () => {
+    const text = encodeCollection('CHK2026', 'A', [1, 2, 3], '01');
     expect(decodeCollection(text, 'OTHER', 3).ok).toBe(false);
     expect(decodeCollection('nope', 'CHK2026', 3).ok).toBe(false);
-    expect(decodeCollection('CHK2026^A^!!!!', 'CHK2026', 3).ok).toBe(false);
+    expect(decodeCollection('CHK2026^A^AQID^01', 'CHK2026', 3).ok).toBe(false);
+    expect(decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3], 'bad'), 'CHK2026', 3).ok).toBe(false);
+    expect(decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3], '49'), 'CHK2026', 3).ok).toBe(false);
+    expect(decodeCollection(btoa('CHK2026^A^01') + '^!!!!', 'CHK2026', 3).ok).toBe(false);
     expect(decodeCollection(text, 'CHK2026', 50).ok).toBe(false);
   });
-
   it('validates names', () => {
     expect(validateName('')).not.toBeNull();
     expect(validateName('a'.repeat(31))).not.toBeNull();
