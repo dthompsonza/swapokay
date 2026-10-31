@@ -61,7 +61,7 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
       </div>
       <div class="grid">
         @for (entry of visible(); track entry.index) {
-          <div class="cell">
+          <div class="cell" [class.flash]="flashIndex() === entry.index">
             <button type="button" class="icon" [attr.aria-label]="'Add one ' + label(entry.item) + ', current count ' + entry.count" (click)="bump(entry.index)">
               <img [src]="entry.item.icon" alt="" />
               <span class="badge" [class.zero]="entry.count === 0">{{ entry.count }}</span>
@@ -124,7 +124,9 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
     .seg button.on { background: #0b5ed7; color: #fff; }
     .empty { grid-column: 1 / -1; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); gap: 0.75rem 0.25rem; }
-    .cell { display: flex; flex-direction: column; align-items: center; }
+    .cell { display: flex; flex-direction: column; align-items: center; border-radius: 6px; }
+    .cell.flash { animation: lock-flash 2s ease-out; }
+    @keyframes lock-flash { from { background: rgba(220, 38, 38, 0.8); } to { background: rgba(220, 38, 38, 0); } }
     .icon { position: relative; border: 0; background: none; padding: 0.25rem; cursor: pointer; width: 4.5rem; height: 4.5rem; }
     .icon img { width: 100%; height: 100%; pointer-events: none; }
     .badge { position: absolute; top: -2px; right: -2px; min-width: 1.6rem; height: 1.6rem; padding: 0 0.3rem; box-sizing: border-box; border-radius: 0.8rem; background: #0b5ed7; color: #fff; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
@@ -155,6 +157,7 @@ export class CollectionPage {
   protected readonly error = signal('');
   protected readonly dialog = signal<Dialog>(null);
   protected readonly selected = signal<number | null>(null);
+  protected readonly flashIndex = signal<number | null>(null);
   protected readonly variantFilter = signal<VariantFilter>('none');
   protected readonly countFilter = signal<CountFilter | null>(null);
   protected readonly countFilters = COUNT_FILTERS;
@@ -207,14 +210,62 @@ export class CollectionPage {
     this.countFilter.update((current) => (current === value ? null : value));
   }
 
+  private audio?: AudioContext;
+  private flashTimer?: ReturnType<typeof setTimeout>;
+
+  private alertLocked(index: number): void {
+    this.flashIndex.set(null);
+    clearTimeout(this.flashTimer);
+    // Clear first so the CSS animation restarts on repeated taps.
+    this.flashTimer = setTimeout(() => {
+      this.flashIndex.set(index);
+      this.flashTimer = setTimeout(() => this.flashIndex.set(null), 2000);
+    }, 20);
+    this.beep();
+  }
+
+  private beep(): void {
+    this.tone('square', 180, 180, 0.15, 0.12);
+  }
+
+  private chirrup(): void {
+    this.tone('sine', 700, 1500, 0.12, 0.15);
+  }
+
+  private tone(type: OscillatorType, from: number, to: number, seconds: number, volume: number): void {
+    try {
+      this.audio ??= new AudioContext();
+      const ctx = this.audio;
+      void ctx.resume();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(from, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(to, ctx.currentTime + seconds);
+      gain.gain.setValueAtTime(volume, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + seconds);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + seconds);
+    } catch {
+      // Audio unavailable; the visual alert still shows.
+    }
+  }
+
   protected toggleLock(): void {
     this.store.setLocked(this.code(), this.name(), !this.collection()?.locked);
   }
 
   protected bump(index: number): void {
-    if (this.collection()?.locked) return;
+    if (this.collection()?.locked) {
+      this.alertLocked(index);
+      return;
+    }
     const current = this.counts()[index] ?? 0;
-    if (current < COUNT_MAX) this.store.setCount(this.code(), this.name(), index, current + 1);
+    if (current < COUNT_MAX) {
+      this.store.setCount(this.code(), this.name(), index, current + 1);
+      this.chirrup();
+    }
   }
 
   protected setCount(index: number, value: number): void {
