@@ -1,0 +1,9 @@
+Online tools used
+
+Merge PNG files - https://pinetools.com/overlay-images
+
+SVG Editor - https://www.svgviewer.dev/
+
+Convert WEBP to PNG - https://towebp.io/webp-to-png
+
+PNG Bulk Image Resizer - https://bulkresizephotos.com/en?type=exact&width=124&height=124&format=png

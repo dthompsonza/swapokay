@@ -47,6 +47,11 @@ export function collectionStats(counts: readonly number[]): string {
   return `${counts.filter((n) => n > 0).length}/${counts.reduce((a, b) => a + b, 0)}`;
 }
 
+/** Pads (never truncates) counts with zeros so older, shorter collections still cover every item. */
+export function padCounts(counts: readonly number[], length: number): number[] {
+  return counts.length >= length ? [...counts] : [...counts, ...new Array<number>(length - counts.length).fill(0)];
+}
+
 export function encodeCollection(kind: string, name: string, counts: readonly number[], icon: string): string {
   return btoa([kind, name, icon].join(SEP)) + SEP + countsToBase64(counts);
 }
@@ -78,7 +83,7 @@ export function decodeCollection(text: string, expectedKind: string, itemCount: 
   if (validateName(name) !== null) return { ok: false, error: 'The collection name in this code is invalid.' };
   const counts = base64ToCounts(data);
   if (!counts) return { ok: false, error: 'The collection data in this code is corrupt.' };
-  if (counts.length !== itemCount) return { ok: false, error: 'The collection data does not match this kind.' };
+  if (counts.length === 0 || counts.length > itemCount) return { ok: false, error: 'The collection data does not match this kind.' };
   if (!isValidIcon(icon)) return { ok: false, error: 'The collection icon in this code is invalid.' };
-  return { ok: true, value: { kind, name, counts, icon } };
+  return { ok: true, value: { kind, name, counts: padCounts(counts, itemCount), icon } };
 }

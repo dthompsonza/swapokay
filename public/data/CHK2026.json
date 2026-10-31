@@ -351,6 +351,406 @@
       "description": "Checkers Xtra Savings Card",
       "image": "images/CHK2026/XTRASAVINGS.png",
       "icon": "images/CHK2026/icons/XTRASAVINGS.png"
+    },
+    {
+      "code": "ABSA",
+      "name": "Absa",
+      "description": "ABSA (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/ABSA-GOLD.png",
+      "icon": "images/CHK2026/icons/ABSA-GOLD.png"
+    },
+    {
+      "code": "ALLGOLD",
+      "name": "All Gold",
+      "description": "All Gold Tomato Sauce Bottle (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/ALLGOLD-GOLD.png",
+      "icon": "images/CHK2026/icons/ALLGOLD-GOLD.png"
+    },
+    {
+      "code": "AQUELLE",
+      "name": "aQuellé",
+      "description": "aQuellé Naartjie Flavoured Sparkling Water (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/AQUELLE-GOLD.png",
+      "icon": "images/CHK2026/icons/AQUELLE-GOLD.png"
+    },
+    {
+      "code": "BARONE",
+      "name": "Bar-One",
+      "description": "Bar-One Milk Chocolate Bar (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/BARONE-GOLD.png",
+      "icon": "images/CHK2026/icons/BARONE-GOLD.png"
+    },
+    {
+      "code": "BIC",
+      "name": "BIC Kids",
+      "description": "BIC Kids Evolution Stripes Colouring Pencils (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/BIC-GOLD.png",
+      "icon": "images/CHK2026/icons/BIC-GOLD.png"
+    },
+    {
+      "code": "BLACKCAT",
+      "name": "Black Cat",
+      "description": "Black Cat Smooth Peanut Butter (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/BLACKCAT-GOLD.png",
+      "icon": "images/CHK2026/icons/BLACKCAT-GOLD.png"
+    },
+    {
+      "code": "BUTRO",
+      "name": "Clover Butro",
+      "description": "Clover Butro Full Cream Modified Butter Spread (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/BUTRO-GOLD.png",
+      "icon": "images/CHK2026/icons/BUTRO-GOLD.png"
+    },
+    {
+      "code": "CATMOR",
+      "name": "Catmor",
+      "description": "Catmor Chicken Flavoured Dry Cat Food (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/CATMOR-GOLD.png",
+      "icon": "images/CHK2026/icons/CATMOR-GOLD.png"
+    },
+    {
+      "code": "CLOVERBLISS",
+      "name": "Clover Bliss",
+      "description": "Clover Bliss Choc Chip Double Cream Yoghurt (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/CLOVERBLISS-GOLD.png",
+      "icon": "images/CHK2026/icons/CLOVERBLISS-GOLD.png"
+    },
+    {
+      "code": "CLOVERMILK",
+      "name": "Clover Milk",
+      "description": "Clover UHT Full Cream Milk (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/CLOVERMILK-GOLD.png",
+      "icon": "images/CHK2026/icons/CLOVERMILK-GOLD.png"
+    },
+    {
+      "code": "COLGATE",
+      "name": "Colgate",
+      "description": "Colgate Total Active Prevention Clean Mint Fluoride Toothpaste (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/COLGATE-GOLD.png",
+      "icon": "images/CHK2026/icons/COLGATE-GOLD.png"
+    },
+    {
+      "code": "CROSSEBLACKWELL",
+      "name": "Crosse & Blackwell",
+      "description": "Crosse & Blackwell Tangy Mayonnaise (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/CROSSEBLACKWELL-GOLD.png",
+      "icon": "images/CHK2026/icons/CROSSEBLACKWELL-GOLD.png"
+    },
+    {
+      "code": "CROXLEY",
+      "name": "Croxley",
+      "description": "Croxley Mathematical Instruments Set (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/CROXLEY-GOLD.png",
+      "icon": "images/CHK2026/icons/CROXLEY-GOLD.png"
+    },
+    {
+      "code": "DOOM",
+      "name": "Doom",
+      "description": "DOOM Odourless Multi Insects Spray (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/DOOM-GOLD.png",
+      "icon": "images/CHK2026/icons/DOOM-GOLD.png"
+    },
+    {
+      "code": "DURACELL",
+      "name": "Duracell",
+      "description": "Duracell Plus AA Alkaline Batteries (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/DURACELL-GOLD.png",
+      "icon": "images/CHK2026/icons/DURACELL-GOLD.png"
+    },
+    {
+      "code": "ENERGADE",
+      "name": "Energade",
+      "description": "Energade Blueberry Flavoured Sports Drink (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/ENERGADE-GOLD.png",
+      "icon": "images/CHK2026/icons/ENERGADE-GOLD.png"
+    },
+    {
+      "code": "ENERGIZER",
+      "name": "Energizer",
+      "description": "Energizer MAX AA Alkaline Batteries (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/ENERGIZER-GOLD.png",
+      "icon": "images/CHK2026/icons/ENERGIZER-GOLD.png"
+    },
+    {
+      "code": "ESKORT",
+      "name": "Eskort",
+      "description": "Eskort Wood Smoked Rindless Streaky Bacon (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/ESKORT-GOLD.png",
+      "icon": "images/CHK2026/icons/ESKORT-GOLD.png"
+    },
+    {
+      "code": "FORAGEFEAST",
+      "name": "Forage & Feast",
+      "description": "Forage & Feast Cape Fynbos & Wildflower Honey (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/FORAGEFEAST-GOLD.png",
+      "icon": "images/CHK2026/icons/FORAGEFEAST-GOLD.png"
+    },
+    {
+      "code": "GLADE",
+      "name": "Glade",
+      "description": "Glade Scents of Africa Serengeti Oud Scented Mist Air Freshener (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/GLADE-GOLD.png",
+      "icon": "images/CHK2026/icons/GLADE-GOLD.png"
+    },
+    {
+      "code": "HANDYANDY",
+      "name": "Handy Andy",
+      "description": "Handy Andy Multi-Purpose Spray (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/HANDYANDY-GOLD.png",
+      "icon": "images/CHK2026/icons/HANDYANDY-GOLD.png"
+    },
+    {
+      "code": "HUGGIES",
+      "name": "Huggies",
+      "description": "Huggies Gold Skin Soft Nappies (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/HUGGIES-GOLD.png",
+      "icon": "images/CHK2026/icons/HUGGIES-GOLD.png"
+    },
+    {
+      "code": "JUNGLE",
+      "name": "Jungle",
+      "description": "Jungle Yoghurt Energy Bar (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/JUNGLE-GOLD.png",
+      "icon": "images/CHK2026/icons/JUNGLE-GOLD.png"
+    },
+    {
+      "code": "KELLOGGS",
+      "name": "Kellogg's",
+      "description": "Kellogg's Hot 'n Spicy Mie Goreng Premium Stir Fry Noodles (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/KELLOGGS-GOLD.png",
+      "icon": "images/CHK2026/icons/KELLOGGS-GOLD.png"
+    },
+    {
+      "code": "KNORR",
+      "name": "Knorr",
+      "description": "Knorr Carbonara Pasta Pot (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/KNORR-GOLD.png",
+      "icon": "images/CHK2026/icons/KNORR-GOLD.png"
+    },
+    {
+      "code": "KRUSH",
+      "name": "Clover Krush",
+      "description": "Clover Krush 100% Orange Fruit Juice Blend (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/KRUSH-GOLD.png",
+      "icon": "images/CHK2026/icons/KRUSH-GOLD.png"
+    },
+    {
+      "code": "LAAGER",
+      "name": "Laager",
+      "description": "Laager Pure Rooibos Teabags (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/LAAGER-GOLD.png",
+      "icon": "images/CHK2026/icons/LAAGER-GOLD.png"
+    },
+    {
+      "code": "MAYNARDS",
+      "name": "Maynards",
+      "description": "Maynards Original Wine Gums (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/MAYNARDS-GOLD.png",
+      "icon": "images/CHK2026/icons/MAYNARDS-GOLD.png"
+    },
+    {
+      "code": "METALAB",
+      "name": "Metalab",
+      "description": "METALAB BRIDGE Vanilla Milk Premium Whey Protein Blend (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/METALAB-GOLD.png",
+      "icon": "images/CHK2026/icons/METALAB-GOLD.png"
+    },
+    {
+      "code": "NEDBANK",
+      "name": "Nedbank",
+      "description": "Nedbank (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/NEDBANK-GOLD.png",
+      "icon": "images/CHK2026/icons/NEDBANK-GOLD.png"
+    },
+    {
+      "code": "NIVEAMEN",
+      "name": "Nivea Men",
+      "description": "NIVEA Men Deep Body Lotion (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/NIVEAMEN-GOLD.png",
+      "icon": "images/CHK2026/icons/NIVEAMEN-GOLD.png"
+    },
+    {
+      "code": "NIVEAROLLON",
+      "name": "Nivea Roll-On",
+      "description": "NIVEA Roll-On (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/NIVEAROLLON-GOLD.png",
+      "icon": "images/CHK2026/icons/NIVEAROLLON-GOLD.png"
+    },
+    {
+      "code": "OMO",
+      "name": "Omo",
+      "description": "OMO Superlift Auto Washing Liquid (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/OMO-GOLD.png",
+      "icon": "images/CHK2026/icons/OMO-GOLD.png"
+    },
+    {
+      "code": "OROS",
+      "name": "Oros",
+      "description": "Oros Orange Flavoured Concentrated Squash (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/OROS-GOLD.png",
+      "icon": "images/CHK2026/icons/OROS-GOLD.png"
+    },
+    {
+      "code": "PARMALAT",
+      "name": "Parmalat",
+      "description": "Parmalat Cheddar Cheese (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/PARMALAT-GOLD.png",
+      "icon": "images/CHK2026/icons/PARMALAT-GOLD.png"
+    },
+    {
+      "code": "PIEMANS",
+      "name": "Pieman's",
+      "description": "PIEMAN'S BBQ Chicken Pizza Pockets (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/PIEMANS-GOLD.png",
+      "icon": "images/CHK2026/icons/PIEMANS-GOLD.png"
+    },
+    {
+      "code": "REXONA",
+      "name": "Rexona",
+      "description": "Rexona Aerosol (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/REXONA-GOLD.png",
+      "icon": "images/CHK2026/icons/REXONA-GOLD.png"
+    },
+    {
+      "code": "RICOFFY",
+      "name": "Ricoffy",
+      "description": "NESCAFÉ RICOFFY Soluble Chicory & Coffee Granules (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/RICOFFY-GOLD.png",
+      "icon": "images/CHK2026/icons/RICOFFY-GOLD.png"
+    },
+    {
+      "code": "ROBERTSONS",
+      "name": "Robertsons",
+      "description": "Robertsons Braai & Grill All-in-One Spice (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/ROBERTSONS-GOLD.png",
+      "icon": "images/CHK2026/icons/ROBERTSONS-GOLD.png"
+    },
+    {
+      "code": "SIMPLETRUTH",
+      "name": "Simple Truth",
+      "description": "Simple Truth Large Free-Range Eggs (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/SIMPLETRUTH-GOLD.png",
+      "icon": "images/CHK2026/icons/SIMPLETRUTH-GOLD.png"
+    },
+    {
+      "code": "SIRFRUIT",
+      "name": "Sir Fruit",
+      "description": "Sir Fruit Orange 100% Fruit Juice Blend (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/SIRFRUIT-GOLD.png",
+      "icon": "images/CHK2026/icons/SIRFRUIT-GOLD.png"
+    },
+    {
+      "code": "SIXTY60",
+      "name": "Sixty60",
+      "description": "Sixty60 Teal Ride-On Bike with Loadbox (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/SIXTY60-GOLD.png",
+      "icon": "images/CHK2026/icons/SIXTY60-GOLD.png"
+    },
+    {
+      "code": "STANDARDBANK",
+      "name": "Standard Bank",
+      "description": "Standard Bank (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/STANDARDBANK-GOLD.png",
+      "icon": "images/CHK2026/icons/STANDARDBANK-GOLD.png"
+    },
+    {
+      "code": "STERISTUMPIE",
+      "name": "Steri Stumpie",
+      "description": "Steri Stumpie Chocolate Flavoured Milk (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/STERISTUMPIE-GOLD.png",
+      "icon": "images/CHK2026/icons/STERISTUMPIE-GOLD.png"
+    },
+    {
+      "code": "SUNFOIL",
+      "name": "Sunfoil",
+      "description": "Sunfoil Pure Sunflower Seed Oil (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/SUNFOIL-GOLD.png",
+      "icon": "images/CHK2026/icons/SUNFOIL-GOLD.png"
+    },
+    {
+      "code": "SUNSHINED",
+      "name": "Sunshine D",
+      "description": "Sunshine D Original Fat Spread (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/SUNSHINED-GOLD.png",
+      "icon": "images/CHK2026/icons/SUNSHINED-GOLD.png"
+    },
+    {
+      "code": "TYPEK",
+      "name": "Typek",
+      "description": "Typek A4 Copy Paper (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/TYPEK-GOLD.png",
+      "icon": "images/CHK2026/icons/TYPEK-GOLD.png"
+    },
+    {
+      "code": "VASELINE",
+      "name": "Vaseline",
+      "description": "Vaseline Cera Glow Body Gel Oil (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/VASELINE-GOLD.png",
+      "icon": "images/CHK2026/icons/VASELINE-GOLD.png"
+    },
+    {
+      "code": "WAHL",
+      "name": "Wahl",
+      "description": "Wahl Home Pro Haircutting Kit (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/WAHL-GOLD.png",
+      "icon": "images/CHK2026/icons/WAHL-GOLD.png"
+    },
+    {
+      "code": "XTRASAVINGS",
+      "name": "Xtra Savings Card",
+      "description": "Checkers Xtra Savings Card (Gold)",
+      "variant": "GOLD",
+      "image": "images/CHK2026/XTRASAVINGS-GOLD.png",
+      "icon": "images/CHK2026/icons/XTRASAVINGS-GOLD.png"
     }
   ]
 }

@@ -1,5 +1,5 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { base64ToCounts, clampCount, countsToBase64, encodeCollection } from './collection-codec';
+import { base64ToCounts, clampCount, padCounts, countsToBase64, encodeCollection } from './collection-codec';
 import { isValidIcon, randomIcon } from './collection-icons';
 import { StoredCollection } from './models';
 
@@ -36,9 +36,10 @@ export class CollectionStore {
   setCount(kind: string, name: string, index: number, value: number): void {
     const current = this.get(kind, name);
     const counts = current && base64ToCounts(current.data);
-    if (!current || !counts || index < 0 || index >= counts.length) return;
-    counts[index] = clampCount(value);
-    this.replace(current, { ...current, data: countsToBase64(counts), updated: new Date().toISOString() });
+    if (!current || !counts || index < 0 || index >= 1000) return;
+    const next = padCounts(counts, index + 1);
+    next[index] = clampCount(value);
+    this.replace(current, { ...current, data: countsToBase64(next), updated: new Date().toISOString() });
   }
 
   edit(kind: string, name: string, newName: string, icon: string): void {

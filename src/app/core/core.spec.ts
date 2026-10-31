@@ -26,8 +26,13 @@ describe('codec', () => {
     expect(decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3], 'bad'), 'CHK2026', 3).ok).toBe(false);
     expect(decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3], '49'), 'CHK2026', 3).ok).toBe(false);
     expect(decodeCollection(btoa('CHK2026^A^01') + '^!!!!', 'CHK2026', 3).ok).toBe(false);
-    expect(decodeCollection(text, 'CHK2026', 50).ok).toBe(false);
+    expect(decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3, 4], '01'), 'CHK2026', 3).ok).toBe(false);
   });
+  it('pads shorter (older) counts with zeros', () => {
+    const r = decodeCollection(encodeCollection('CHK2026', 'A', [1, 2, 3], '01'), 'CHK2026', 5);
+    expect(r.ok && r.value.counts).toEqual([1, 2, 3, 0, 0]);
+  });
+
   it('validates names', () => {
     expect(validateName('')).not.toBeNull();
     expect(validateName('a'.repeat(31))).not.toBeNull();

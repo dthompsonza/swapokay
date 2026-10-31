@@ -9,7 +9,7 @@ import { KindSummary } from '../core/models';
   imports: [RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <h1>Collectables</h1>
+    <br/>
     @if (error()) {
       <p class="error" role="alert">{{ error() }}</p>
     }

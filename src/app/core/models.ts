@@ -10,8 +10,13 @@ export interface CollectibleItem {
   code: string;
   name: string;
   description: string;
+  variant?: string;
   image: string;
   icon: string;
+}
+
+export function itemLabel(item: CollectibleItem): string {
+  return item.variant ? `${item.name} (${item.variant.charAt(0)}${item.variant.slice(1).toLowerCase()})` : item.name;
 }
 
 export interface CollectibleKind {

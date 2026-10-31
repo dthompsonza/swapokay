@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, computed, input, output, signal, viewChild } from '@angular/core';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 import { decodeCollection } from '../core/collection-codec';
-import { CollectibleItem } from '../core/models';
+import { CollectibleItem, itemLabel } from '../core/models';
 import { SwapResult, computeSwap } from '../core/swap-diff';
 import { Modal } from './modal';
 
@@ -17,13 +17,13 @@ import { Modal } from './modal';
         <p>Possible swaps: <strong>{{ r.swaps }}</strong></p>
         <h3>You can give ({{ r.give.length }})</h3>
         @for (e of r.give; track e.item.code) {
-          <div class="row"><img [src]="e.item.icon" alt="" /><span>{{ e.item.name }}</span><b>×{{ e.quantity }}</b></div>
+          <div class="row"><img [src]="e.item.icon" alt="" /><span>{{ label(e.item) }}</span><b>×{{ e.quantity }}</b></div>
         } @empty {
           <p class="muted">Nothing to give.</p>
         }
         <h3>You can receive ({{ r.receive.length }})</h3>
         @for (e of r.receive; track e.item.code) {
-          <div class="row"><img [src]="e.item.icon" alt="" /><span>{{ e.item.name }}</span><b>×{{ e.quantity }}</b></div>
+          <div class="row"><img [src]="e.item.icon" alt="" /><span>{{ label(e.item) }}</span><b>×{{ e.quantity }}</b></div>
         } @empty {
           <p class="muted">Nothing to receive.</p>
         }
@@ -60,6 +60,7 @@ import { Modal } from './modal';
   `,
 })
 export class Compare implements OnDestroy {
+  protected readonly label = itemLabel;
   readonly kindCode = input.required<string>();
   readonly items = input.required<CollectibleItem[]>();
   readonly mine = input.required<number[]>();
