@@ -42,6 +42,11 @@ export class CollectionStore {
     this.replace(current, { ...current, data: countsToBase64(next), updated: new Date().toISOString() });
   }
 
+  setLocked(kind: string, name: string, locked: boolean): void {
+    const current = this.get(kind, name);
+    if (current) this.replace(current, { ...current, locked });
+  }
+
   edit(kind: string, name: string, newName: string, icon: string): void {
     const current = this.get(kind, name);
     if (current) this.replace(current, { ...current, name: newName.trim(), icon, updated: new Date().toISOString() });

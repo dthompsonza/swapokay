@@ -115,7 +115,8 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
   - Collection icons: the 48 SVGs `public/images/collection-icons/01.svg` … `48.svg` (file names are a unique two-digit id `XX`; old `line-design-NN.svg` files are removed). The list is defined in one place (`core/collection-icons.ts`) as ids (`01`…`48`); the path is `images/collection-icons/{XX}.svg` (`.svg` is always assumed). Each collection stores one icon (`icon` = the id `XX`, e.g. `07`). The icon is part of the encoded string/QR (section 6). Existing collections without a valid icon (including old `line-design-NN.svg` values) get a random one assigned and saved on load. The icon is shown next to the collection name on the collection page and in the kind page collection list.
 4. **Add Collection – step 2 / Collection page (`/kind/:code/c/:name`)**: grid of all items, **invisible grid lines** (no borders), responsive columns.
    - Each cell: item icon with a **count badge** (starts `0`), item name underneath.
-   - Tap icon → count +1 (max 255; at 255 do nothing/visual hint).
+   - Tap icon → count +1 (max 255; at 255 do nothing/visual hint). Unless the collection is **locked** (see below), in which case tapping the icon does nothing.
+   - **Lock toggle:** on the Show QR / Scan QR row, immediately to the right of those buttons, a flat rectangular toggle button (same style as them, `aria-pressed`, aria-label "Lock collection"/"Unlock collection") shows a Lock icon when locked and an Unlock icon when unlocked. When locked, tapping an item icon in the grid does nothing; the item modal (opened via the item name) still allows changing the count (±, typing). The lock only protects the list view from accidental changes. The state is persisted per collection in localStorage as `locked` (boolean, default/missing = false) and only changes when the user toggles it; new collections are unlocked. It is not part of the QR/encoded string and survives rename/edit.
    - Tap/click name → **modal**: larger image, name underneath, count text field with **"−"** to the left and **"+"** to the right (±1). Bounds 0–255; typed input is sanitised/clamped to integers 0–255.
    - Collection is saved to localStorage when step 1 completes and on every change.
    - No Rename button. A **pencil icon button** (aria-label "Edit collection") sits to the right of the collection name and opens an **edit modal** to change the name (same name rules; unchanged own name is allowed) and pick a different icon from the 50 (current one selected). Save/Cancel.
@@ -133,7 +134,7 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
   - Part 1 (obfuscated header): standard Base64 of UTF-8 text `KINDCODE^Name^Icon` (kind code; collection name, alphanumeric + spaces only so `^` never appears; icon id `XX` only, no `.svg`). Separator `^` (Base64 never contains `^`). Part 2: standard Base64 of a byte array, **one byte per item** in kind item order (value 0–255); 50 items → 50 bytes. The old plain formats (`KIND^Name^Base64[^Icon]`) are no longer supported.
   - Example (3 items, 10 of the 2nd): bytes `00 0A 00`.
 - Decoding validates: exactly 2 `^` parts, header Base64 decodes to exactly 3 `^` segments, icon is one of the known icon ids, matching kind code, valid name, valid Base64 counts, byte length == item count of the kind.
-- localStorage key `swapokay.collections.v1`: JSON array of `{ "kind": "CHK2026", "name": "...", "data": "<base64>", "icon": "07", "updated": "<ISO date>" }` (full string derived via the codec; no duplicate storage format).
+- localStorage key `swapokay.collections.v1`: JSON array of `{ "kind": "CHK2026", "name": "...", "data": "<base64>", "icon": "07", "locked": false, "updated": "<ISO date>" }` (`locked` optional, missing = false; full string derived via the codec; no duplicate storage format).
 - Single `CollectionStore` service (signals) owns all reads/writes; handle missing/corrupt localStorage gracefully.
 
 ## 7. Compare / swap rules
@@ -182,5 +183,6 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-30: Kind page collection rows show right-aligned `unique/total` stats text.
 - 2026-10-30: Collection view shows live `unique/total` stats under the name (dark gray, small); stats helper shared in the codec.
 - 2026-10-31: Introduced variants (GOLD items appended to CHK2026 data, optional `variant` field, shorter counts padded with zeros) and collection grid filters (Variant None/Golden toggle; Count Missing/Single/Duplicates).
+- 2026-10-31: Added persisted per-collection Lock/Unlock toggle (right of Show/Scan QR) that disables tap-to-increment in the grid; the item modal still edits counts.
 - 2026-10-31: Action and filter buttons restyled flatter and more rectangular (min-height 36px, 2px corner radius, tighter padding); this supersedes the 44px minimum for these buttons only.
 - 2026-10-31: Filter controls moved onto the same row as Show QR / Scan QR, right-aligned.

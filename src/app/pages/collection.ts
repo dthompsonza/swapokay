@@ -40,6 +40,13 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
       <div class="actions">
         <button type="button" (click)="dialog.set('qr')">Show QR</button>
         <button type="button" (click)="dialog.set('compare')">Scan QR</button>
+        <button type="button" class="lock" [class.on]="collection()?.locked" [attr.aria-pressed]="!!collection()?.locked" [attr.aria-label]="collection()?.locked ? 'Unlock collection' : 'Lock collection'" (click)="toggleLock()">
+          @if (collection()?.locked) {
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          } @else {
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>
+          }
+        </button>
         <div class="filters">
         <div class="seg" role="group" aria-label="Variant">
           <button type="button" [class.on]="variantFilter() === 'none'" [attr.aria-pressed]="variantFilter() === 'none'" (click)="variantFilter.set('none')">None</button>
@@ -108,6 +115,8 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
   styles: `
     .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
     .actions > button { min-height: 36px; padding: 0 0.75rem; border-radius: 2px; border: 1px solid #bbb; background: #f4f4f4; font: inherit; font-size: 0.9rem; cursor: pointer; }
+    .actions > button.on { background: #0b5ed7; color: #fff; border-color: #0b5ed7; }
+    .lock { display: inline-flex; align-items: center; justify-content: center; }
     .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-left: auto; justify-content: flex-end; }
     .seg { display: inline-flex; border: 1px solid #bbb; border-radius: 2px; overflow: hidden; }
     .seg button { min-height: 36px; padding: 0 0.6rem; border: 0; border-right: 1px solid #bbb; background: #f4f4f4; font: inherit; font-size: 0.9rem; cursor: pointer; }
@@ -198,7 +207,12 @@ export class CollectionPage {
     this.countFilter.update((current) => (current === value ? null : value));
   }
 
+  protected toggleLock(): void {
+    this.store.setLocked(this.code(), this.name(), !this.collection()?.locked);
+  }
+
   protected bump(index: number): void {
+    if (this.collection()?.locked) return;
     const current = this.counts()[index] ?? 0;
     if (current < COUNT_MAX) this.store.setCount(this.code(), this.name(), index, current + 1);
   }

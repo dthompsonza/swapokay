@@ -30,5 +30,6 @@ export interface StoredCollection {
   name: string;
   data: string;
   icon: string;
+  locked?: boolean;
   updated: string;
 }
