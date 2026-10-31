@@ -129,6 +129,10 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
    - If invalid/corrupt → error message.
    - Otherwise show the result (see section 7).
 
+## 5a. Sound toggle
+- The top app bar (same bar as the logo) has a **speaker icon button** at the top right (aria-label "Mute sounds"/"Unmute sounds", `aria-pressed`, min 44px). Enabled by default (speaker icon); pressing it toggles to muted (speaker with a line through it).
+- A single app-wide sound setting (signal in one service, persisted in localStorage key `swapokay.sound.v1`; missing = enabled). The item-tap chirrup and the locked-collection tone (section 5.4) play **only when sound is enabled**; the visual red flash for locked taps is unaffected.
+
 ## 6. Storage & encoding
 - Encoded collection string: `Base64(KINDCODE^Name^Icon)^Base64(counts)` e.g. `Q0hLMjAyNl5NeSBTdGlja2Vyc14wNw==^AAAAAAo...` (header is `CHK2026^My Stickers^07`).
   - Part 1 (obfuscated header): standard Base64 of UTF-8 text `KINDCODE^Name^Icon` (kind code; collection name, alphanumeric + spaces only so `^` never appears; icon id `XX` only, no `.svg`). Separator `^` (Base64 never contains `^`). Part 2: standard Base64 of a byte array, **one byte per item** in kind item order (value 0–255); 50 items → 50 bytes. The old plain formats (`KIND^Name^Base64[^Icon]`) are no longer supported.
@@ -188,3 +192,4 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-31: Added persisted per-collection Lock/Unlock toggle (right of Show/Scan QR) that disables tap-to-increment in the grid; the item modal still edits counts.
 - 2026-10-31: Action and filter buttons restyled flatter and more rectangular (min-height 36px, 2px corner radius, tighter padding); this supersedes the 44px minimum for these buttons only.
 - 2026-10-31: Filter controls moved onto the same row as Show QR / Scan QR, right-aligned.
+- 2026-10-31: Added app-wide sound toggle (speaker / muted speaker icon in the top bar, default on, persisted); item sounds only play when enabled (section 5a).

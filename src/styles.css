@@ -1,6 +1,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: #222; background: #fafafa; }
-.top { background: #0b5ed7; padding: 0 1rem; }
+.top { background: #0b5ed7; padding: 0 1rem; display: flex; align-items: center; justify-content: space-between; }
+.sound-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; background: transparent; border: 0; color: #fff; cursor: pointer; }
+.sound-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .top a { display: inline-flex; align-items: center; min-height: 48px; color: #fff; font-weight: 700; text-decoration: none; }
 main { max-width: 48rem; margin: 0 auto; padding: 1rem; }
 h1 { font-size: 1.5rem; margin: 0.5rem 0; }

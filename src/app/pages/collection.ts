@@ -4,6 +4,7 @@ import { COUNT_MAX, NAME_MAX, base64ToCounts, collectionStats, padCounts, valida
 import { iconPath, randomIcon } from '../core/collection-icons';
 import { CollectionStore } from '../core/collection-store';
 import { KindService } from '../core/kind.service';
+import { SoundService } from '../core/sound.service';
 import { CollectibleKind, itemLabel } from '../core/models';
 import { Compare } from '../shared/compare';
 import { IconPicker } from '../shared/icon-picker';
@@ -151,6 +152,7 @@ export class CollectionPage {
   private readonly store = inject(CollectionStore);
   private readonly svc = inject(KindService);
   private readonly router = inject(Router);
+  private readonly sound = inject(SoundService);
 
   protected readonly maxLength = NAME_MAX;
   protected readonly kind = signal<CollectibleKind | null>(null);
@@ -233,6 +235,7 @@ export class CollectionPage {
   }
 
   private tone(type: OscillatorType, from: number, to: number, seconds: number, volume: number): void {
+    if (!this.sound.enabled()) return;
     try {
       this.audio ??= new AudioContext();
       const ctx = this.audio;
