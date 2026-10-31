@@ -182,4 +182,5 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-30: Kind page collection rows show right-aligned `unique/total` stats text.
 - 2026-10-30: Collection view shows live `unique/total` stats under the name (dark gray, small); stats helper shared in the codec.
 - 2026-10-31: Introduced variants (GOLD items appended to CHK2026 data, optional `variant` field, shorter counts padded with zeros) and collection grid filters (Variant None/Golden toggle; Count Missing/Single/Duplicates).
+- 2026-10-31: Action and filter buttons restyled flatter and more rectangular (min-height 36px, 2px corner radius, tighter padding); this supersedes the 44px minimum for these buttons only.
 - 2026-10-31: Filter controls moved onto the same row as Show QR / Scan QR, right-aligned.

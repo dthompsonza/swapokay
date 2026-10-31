@@ -107,10 +107,10 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
   `,
   styles: `
     .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
-    .actions > button { min-height: 44px; padding: 0 1rem; border-radius: 8px; border: 1px solid #bbb; background: #f4f4f4; cursor: pointer; }
+    .actions > button { min-height: 36px; padding: 0 0.75rem; border-radius: 2px; border: 1px solid #bbb; background: #f4f4f4; font: inherit; font-size: 0.9rem; cursor: pointer; }
     .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-left: auto; justify-content: flex-end; }
-    .seg { display: inline-flex; border: 1px solid #bbb; border-radius: 8px; overflow: hidden; }
-    .seg button { min-height: 44px; padding: 0 1rem; border: 0; border-right: 1px solid #bbb; background: #f4f4f4; font: inherit; cursor: pointer; }
+    .seg { display: inline-flex; border: 1px solid #bbb; border-radius: 2px; overflow: hidden; }
+    .seg button { min-height: 36px; padding: 0 0.6rem; border: 0; border-right: 1px solid #bbb; background: #f4f4f4; font: inherit; font-size: 0.9rem; cursor: pointer; }
     .seg button:last-child { border-right: 0; }
     .seg button.on { background: #0b5ed7; color: #fff; }
     .empty { grid-column: 1 / -1; }
