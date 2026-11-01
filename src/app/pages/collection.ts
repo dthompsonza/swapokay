@@ -73,6 +73,7 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
           <p class="muted empty">No items match the filters.</p>
         }
       </div>
+      <p class="muted showing">Showing {{ visible().length }} of {{ k.items.length }} items</p>
 
       @if (selectedItem(); as s) {
         <app-item-modal [item]="s.item" [count]="s.count" (countChange)="setCount(s.index, $event)" (closed)="selected.set(null)" />
@@ -124,6 +125,7 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
     .seg button:last-child { border-right: 0; }
     .seg button.on { background: #0b5ed7; color: #fff; }
     .empty { grid-column: 1 / -1; }
+    .showing { text-align: center; margin: 1rem 0; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); gap: 0.75rem 0.25rem; }
     .cell { display: flex; flex-direction: column; align-items: center; border-radius: 6px; }
     .cell.flash { animation: lock-flash 2s ease-out; }
