@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SoundService } from './core/sound.service';
 
@@ -6,9 +6,35 @@ import { SoundService } from './core/sound.service';
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(document:keydown.escape)': 'menuOpen.set(false)',
+    '(document:click)': 'onDocumentClick($event)',
+  },
   template: `
     <header class="top">
       <a routerLink="/" class="logo"><img src="swapokay-header.png" alt="SwapOkay" width="200" height="122" /></a>
+      <nav class="menu">
+        <button
+          type="button"
+          class="menu-button"
+          aria-label="Menu"
+          aria-haspopup="true"
+          [attr.aria-expanded]="menuOpen()"
+          (click)="menuOpen.set(!menuOpen())"
+        >
+          <svg class="burger" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span class="menu-text" aria-hidden="true">MENU</span>
+        </button>
+        @if (menuOpen()) {
+          <ul class="menu-panel">
+            <li><a routerLink="/" (click)="menuOpen.set(false)">Home</a></li>
+            <li><a routerLink="/about" (click)="menuOpen.set(false)">About</a></li>
+            <li><a routerLink="/sponsors" (click)="menuOpen.set(false)">Sponsors</a></li>
+          </ul>
+        }
+      </nav>
     </header>
     <div class="controls">
       <button
@@ -33,4 +59,11 @@ import { SoundService } from './core/sound.service';
 })
 export class App {
   protected readonly sound = inject(SoundService);
+  protected readonly menuOpen = signal(false);
+  private readonly host = inject(ElementRef<HTMLElement>);
+
+  protected onDocumentClick(event: Event): void {
+    const nav = (this.host.nativeElement as HTMLElement).querySelector('.menu');
+    if (!nav?.contains(event.target as Node)) this.menuOpen.set(false);
+  }
 }

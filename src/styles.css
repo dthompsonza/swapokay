@@ -1,6 +1,17 @@
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: #222; background: #fafafa; }
-.top { background: #fff; padding: 0 1rem 5px; display: flex; align-items: center; }
+.top { background: #fff; padding: 0 1rem 5px; display: flex; align-items: center; justify-content: space-between; }
+.menu { position: relative; }
+.menu-button { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 0.5rem; background: transparent; border: 0; color: #222; font: inherit; font-weight: 400; letter-spacing: 0.08em; cursor: pointer; }
+.menu-button:focus-visible { outline: 2px solid #0b5ed7; outline-offset: 2px; }
+.menu-text { display: none; }
+.menu-panel { position: absolute; right: 0; top: 100%; z-index: 10; margin: 0; padding: 0.25rem 0; list-style: none; min-width: 160px; background: #fff; border: 1px solid #ccc; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+.top .menu-panel a { font-weight: 400; display: flex; align-items: center; min-height: 44px; padding: 0 1rem; color: #222; text-decoration: none; }
+.menu-panel a:hover, .menu-panel a:focus-visible { background: #eee; }
+@media (min-width: 900px) {
+  .menu-text { display: inline; }
+  .burger { display: none; }
+}
 .controls { background: #4cbd18; padding: 0 1rem; display: flex; align-items: center; justify-content: flex-end; width: 100%; }
 .sound-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; background: transparent; border: 0; color: #fff; cursor: pointer; }
 .sound-toggle svg { filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55)); }

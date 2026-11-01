@@ -6,6 +6,7 @@
 3. If the request is ambiguous, ask questions (ask_user) before updating this file.
 4. If app files and this file disagree, this file wins; flag the discrepancy to the user.
 5. Pure questions/explanations need no file change.
+6. (Current session, per user 2026-11-01) Confirmation in step 2(b) is waived: update this file first, then implement the app changes directly, and summarise afterwards.
 
 ## 1. Purpose
 Client-side-only Angular SPA to capture collections of collectibles (counts per item) and compare two collections (via QR code) so users can swap duplicates for items the other lacks. No backend; user data in `localStorage`.
@@ -138,6 +139,13 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
 - **Header bar** is **white** (was blue) and holds only the logo, with 5px of padding below the logo (between the logo's bottom and the top of the controls bar).
 - **Controls bar**: a full-page-width `div` directly below the header, background green `#4cbd18`, just tall enough for its content (the 44px sound toggle). It holds the sound toggle (moved out of the header), right-aligned, with a white icon that has a subtle drop shadow for contrast, and is intended for future functionality toggles.
 
+## 5c. Menu & static pages
+- The white header bar has a **menu** at its right (logo stays left). Below **900px** viewport width (phones/tablets) it is a **burger icon button** (aria-label "Menu", `aria-expanded`, min 44px); at **≥ 900px** (laptops/desktops) it is a text button reading **MENU**. Both open the same dropdown panel (anchored under the button, right-aligned) listing: **Home** (`/`), **About** (`/about`), **Sponsors** (`/sponsors`). Choosing an item navigates and closes the panel; Esc, outside click, or pressing the button again also closes it. Keyboard accessible, links min 44px.
+- **About (`/about`)**: friendly, welcoming tone. Paragraph 1 - this site lets people count how many collectible items they have. Paragraph 2 - using the **Show QR** and **Scan QR** buttons they can quickly compare with other people to see which items they can swap. Paragraph 3 - a personal, not-for-profit weekend project built using Copilot in a couple of hours. Paragraph 4 - made to keep track of Checkers Collectables but can and will be expanded to include other kinds of collectibles; people are warmly invited to contact the web author at `wjcay4pz7@mozmail.com` (a `mailto:` link) with suggestions.
+- **Sponsors (`/sponsors`)**: friendly, welcoming tone. Intro explains this page is for people who have donated time or money, and a `mailto:wjcay4pz7@mozmail.com` link invites readers to contact the web author if they wish to contribute (their name or message will be posted here by way of thanks). **Underneath** that content is a **"Thanks"** heading (h2); the people to thank are listed underneath it (data array in one place). The list is currently **empty** (friendly empty-state message under the heading).
+- Routes are hash-based like the others; pages are standalone components under `pages/`.
+- Menu typography: the "MENU" button text and the dropdown item text use a **thin/regular weight (400)**, not bold.
+
 ## 6. Storage & encoding
 - Encoded collection string: `Base64(KINDCODE^Name^Icon)^Base64(counts)` e.g. `Q0hLMjAyNl5NeSBTdGlja2Vyc14wNw==^AAAAAAo...` (header is `CHK2026^My Stickers^07`).
   - Part 1 (obfuscated header): standard Base64 of UTF-8 text `KINDCODE^Name^Icon` (kind code; collection name, alphanumeric + spaces only so `^` never appears; icon id `XX` only, no `.svg`). Separator `^` (Base64 never contains `^`). Part 2: standard Base64 of a byte array, **one byte per item** in kind item order (value 0–255); 50 items → 50 bytes. The old plain formats (`KIND^Name^Base64[^Icon]`) are no longer supported.
@@ -199,3 +207,6 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-31: Filter controls moved onto the same row as Show QR / Scan QR, right-aligned.
 - 2026-10-31: Added app-wide sound toggle (speaker / muted speaker icon in the top bar, default on, persisted); item sounds only play when enabled (section 5a).
 - 2026-11-01: Header bar now white with the logo; new full-width green (#4cbd18) controls bar below it (5px gap) now holds the sound toggle (section 5b); sound toggle location in 5a updated.
+- 2026-11-01: Added header menu (burger below 900px, "MENU" text on desktop) with Home / About / Sponsors; new About and Sponsors pages (section 5c).
+- 2026-11-01: Menu text uses regular (400) weight instead of bold.
+- 2026-11-01: About page reworded (explains counting + Show/Scan QR swapping, friendlier); Sponsors page reworded and gains a "Thanks" heading with the (empty) list beneath (section 5c).
