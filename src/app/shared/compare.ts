@@ -27,17 +27,17 @@ import { Modal } from './modal';
         } @empty {
           <p class="muted">Nothing to receive.</p>
         }
-        <button type="button" (click)="reset()">Compare another</button>
+        <button type="button" class="btn" (click)="reset()">Compare another</button>
       } @else {
         @if (scanning()) {
           <video #video playsinline muted></video>
-          <button type="button" (click)="stopScan()">Stop camera</button>
+          <button type="button" class="btn" (click)="stopScan()">Stop camera</button>
         } @else {
-          <button type="button" class="primary" (click)="startScan()">Scan QR code with camera</button>
+          <button type="button" class="btn primary" (click)="startScan()">Scan QR code with camera</button>
         }
         <label for="paste">Or paste the collection code</label>
         <textarea id="paste" rows="3" [value]="pasted()" (input)="pasted.set($any($event.target).value)"></textarea>
-        <button type="button" [disabled]="!pasted().trim()" (click)="compare(pasted())">Compare</button>
+        <button type="button" class="btn" [disabled]="!pasted().trim()" (click)="compare(pasted())">Compare</button>
         @if (error()) {
           <p class="error" role="alert">{{ error() }}</p>
         }
@@ -49,8 +49,7 @@ import { Modal } from './modal';
     h3 { margin: 1rem 0 0.25rem; font-size: 1rem; }
     video { width: 100%; border-radius: 8px; background: #000; }
     textarea { width: 100%; box-sizing: border-box; font: inherit; }
-    button { min-height: 44px; margin: 0.5rem 0; padding: 0 1rem; border-radius: 8px; border: 1px solid #bbb; background: #f4f4f4; cursor: pointer; }
-    button.primary { background: #0b5ed7; color: #fff; border-color: #0b5ed7; }
+    label { display: block; margin-top: 0.75rem; }
     .row { display: flex; align-items: center; gap: 0.5rem; min-height: 44px; }
     .row img { width: 36px; height: 36px; }
     .row span { flex: 1; }

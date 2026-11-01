@@ -126,10 +126,12 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
    - **Filters** (on the same row as the Show QR / Scan QR buttons, right-aligned to the list content, wrapping below on narrow screens; not persisted, reset when leaving the page): (1) **Variant** toggle, no label, two options **None** (default; shows only items with no variant) and **Golden** (shows only items with `variant = GOLD`); no-variant and gold items are never shown together. (2) **Count** filter, default off/blank; the user can switch on one of **Missing** (count = 0), **Single** (count = 1), **Duplicates** (count > 1); tapping the active option turns it off. Filters combine (variant AND count). When nothing matches show an empty-state message. The collection stats under the name (`unique/total`) and Show QR/Compare always use the whole collection, not the filtered view. Controls are plain accessible buttons (`aria-pressed`, min 44px) styled as a segmented toggle, mobile-first.
    - **Showing line:** at the bottom of the collection page, horizontally centred, a muted line `Showing X of Y items` where X = number of distinct item types currently displayed in the grid (after filters) and Y = total number of distinct item types in the collection's kind (all variants, e.g. 100 for CHK2026; unaffected by filters).
 5. **Show QR**: modal rendering the collection's encoded string as a QR code (plus the text string and a copy button). The QR is generated with error correction level `H` and the collection's icon is drawn at the centre (about 22% of the QR width, on a white rounded backing square) so it stays scannable. The QR image is rendered to a canvas and shown as an image.
+   - The QR text string is shown in a `<pre>` element (monospace, wrapping) with a 1px border and 5px padding on all sides. The **Copy code** button uses the same flat rectangular style as the collection list-view action buttons (min-height 36px, 2px radius, `#f4f4f4` background, `#bbb` border, 0.9rem).
 6. **Scan QR / Compare**: opened from within a collection; scans via camera (fallback: paste the string). Decodes the other string, then:
    - If kind code differs from the current collection's kind → **reject with error message**.
    - If invalid/corrupt → error message.
    - Otherwise show the result (see section 7).
+   - In the Scan QR modal the label "Or paste the collection code" is always on its own line (block-level, below the scan button).
 
 ## 5a. Sound toggle
 - The **controls bar** (section 5b, below the logo header) has a **speaker icon button** (right-aligned) (aria-label "Mute sounds"/"Unmute sounds", `aria-pressed`, min 44px). Enabled by default (speaker icon); pressing it toggles to muted (speaker with a line through it).
@@ -173,6 +175,7 @@ public/data/, public/images/CHK2026/
 Rename/delete dialogs live inside the collection page using `modal`. Unit tests: `core\core.spec.ts` (codec, validation, swap), `app.spec.ts`.
 
 ## 9. UI / UX
+- **Default button style (single source):** the collection list-view action button look (flat, rectangular: min-height 36px, padding 0 0.75rem, 2px radius, 1px `#bbb` border, `#f4f4f4` background, `#222` text, font inherit at 0.9rem, pointer cursor) is the app-wide default and lives only in the global `.btn` class in `src/styles.css` (with variants `.btn.primary`, `.btn.danger`, `.btn.on`, `:disabled`). All text/action buttons (list view, Show QR, Scan QR/compare modal, Copy code, dialogs, Add Collection, Next/Save/Delete/Cancel) must use `class="btn"` and **must not** define their own button look in component styles, so a change to `.btn` restyles all of them. Intentionally different controls (icon-only buttons: menu, sound, pencil, trash, item counter ±, icon picker tiles, grid icon/name buttons, segmented filter groups) are not `.btn`.
 - Mobile-first, touch-friendly (min 44px targets), keyboard accessible, ARIA labels on badges/buttons/modals.
 - Invisible grid lines; badge overlays top-right of icon; modal closes on Esc/backdrop/close button.
 
@@ -210,5 +213,9 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-11-01: Header bar now white with the logo; new full-width green (#4cbd18) controls bar below it (5px gap) now holds the sound toggle (section 5b); sound toggle location in 5a updated.
 - 2026-11-01: Added header menu (burger below 900px, "MENU" text on desktop) with Home / About / Sponsors; new About and Sponsors pages (section 5c).
 - 2026-11-01: Menu text uses regular (400) weight instead of bold.
+- 2026-11-01: Scan QR modal: "Or paste the collection code" label on its own line.
+- 2026-11-01: Scan QR (compare) modal buttons now use the list-view button style; that style is now the app-wide default `.btn` in global styles (section 9); Copy code and other action buttons switched to it.
+- 2026-11-01: Show QR `<pre>` gets a border and 5px padding.
+- 2026-11-01: Show QR modal: code text in a `<pre>`; Copy code button restyled to match list-view buttons.
 - 2026-11-01: Collection page shows a centred "Showing X of Y items" line at the bottom (section 5.4).
 - 2026-11-01: About page reworded (explains counting + Show/Scan QR swapping, friendlier); Sponsors page reworded and gains a "Thanks" heading with the (empty) list beneath (section 5c).

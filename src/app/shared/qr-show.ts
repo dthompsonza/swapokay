@@ -14,8 +14,8 @@ import { Modal } from './modal';
         @if (dataUrl(); as url) {
           <img [src]="url" alt="QR code for this collection" />
         }
-        <code>{{ text() }}</code>
-        <button type="button" (click)="copy()">{{ copied() ? 'Copied!' : 'Copy code' }}</button>
+        <pre>{{ text() }}</pre>
+        <button type="button" class="btn" (click)="copy()">{{ copied() ? 'Copied!' : 'Copy code' }}</button>
       </div>
     </app-modal>
   `,
@@ -23,7 +23,7 @@ import { Modal } from './modal';
     .body { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
     h2 { margin: 0; font-size: 1.1rem; }
     img { width: min(80vw, 18rem); height: auto; image-rendering: pixelated; }
-    code { font-size: 0.75rem; word-break: break-all; text-align: center; }
+    pre { margin: 0; padding: 5px; border: 1px solid #bbb; box-sizing: border-box; max-width: 100%; font-family: ui-monospace, Consolas, monospace; font-size: 0.75rem; white-space: pre-wrap; word-break: break-all; text-align: center; }
   `,
 })
 export class QrShow implements OnInit {
