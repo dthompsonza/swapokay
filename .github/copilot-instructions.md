@@ -130,8 +130,13 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
    - Otherwise show the result (see section 7).
 
 ## 5a. Sound toggle
-- The top app bar (same bar as the logo) has a **speaker icon button** at the top right (aria-label "Mute sounds"/"Unmute sounds", `aria-pressed`, min 44px). Enabled by default (speaker icon); pressing it toggles to muted (speaker with a line through it).
+- The **controls bar** (section 5b, below the logo header) has a **speaker icon button** (right-aligned) (aria-label "Mute sounds"/"Unmute sounds", `aria-pressed`, min 44px). Enabled by default (speaker icon); pressing it toggles to muted (speaker with a line through it).
 - A single app-wide sound setting (signal in one service, persisted in localStorage key `swapokay.sound.v1`; missing = enabled). The item-tap chirrup and the locked-collection tone (section 5.4) play **only when sound is enabled**; the visual red flash for locked taps is unaffected.
+
+## 5b. Header logo
+- The text "SwapOkay" logo in the top bar is replaced by the image `public/swapokay-header.png` (transparent PNG, 200×122), served via a relative URL `swapokay-header.png`, wrapped in a link to `/` with `alt="SwapOkay"` and `width`/`height` 200×122 attributes. It is shown at full 200×122 on all viewports; the header bar grows to fit it (no shrinking/cropping).
+- **Header bar** is **white** (was blue) and holds only the logo, with 5px of padding below the logo (between the logo's bottom and the top of the controls bar).
+- **Controls bar**: a full-page-width `div` directly below the header, background green `#4cbd18`, just tall enough for its content (the 44px sound toggle). It holds the sound toggle (moved out of the header), right-aligned, with a white icon that has a subtle drop shadow for contrast, and is intended for future functionality toggles.
 
 ## 6. Storage & encoding
 - Encoded collection string: `Base64(KINDCODE^Name^Icon)^Base64(counts)` e.g. `Q0hLMjAyNl5NeSBTdGlja2Vyc14wNw==^AAAAAAo...` (header is `CHK2026^My Stickers^07`).
@@ -193,3 +198,4 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-10-31: Action and filter buttons restyled flatter and more rectangular (min-height 36px, 2px corner radius, tighter padding); this supersedes the 44px minimum for these buttons only.
 - 2026-10-31: Filter controls moved onto the same row as Show QR / Scan QR, right-aligned.
 - 2026-10-31: Added app-wide sound toggle (speaker / muted speaker icon in the top bar, default on, persisted); item sounds only play when enabled (section 5a).
+- 2026-11-01: Header bar now white with the logo; new full-width green (#4cbd18) controls bar below it (5px gap) now holds the sound toggle (section 5b); sound toggle location in 5a updated.

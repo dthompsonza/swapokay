@@ -10,6 +10,6 @@ describe('App', () => {
   it('should render the header', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    expect((fixture.nativeElement as HTMLElement).querySelector('header')?.textContent).toContain('SwapOkay');
+    expect((fixture.nativeElement as HTMLElement).querySelector('header img')?.getAttribute('alt')).toBe('SwapOkay');
   });
 });

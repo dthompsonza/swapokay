@@ -1,9 +1,13 @@
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: #222; background: #fafafa; }
-.top { background: #0b5ed7; padding: 0 1rem; display: flex; align-items: center; justify-content: space-between; }
+.top { background: #fff; padding: 0 1rem 5px; display: flex; align-items: center; }
+.controls { background: #4cbd18; padding: 0 1rem; display: flex; align-items: center; justify-content: flex-end; width: 100%; }
 .sound-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; background: transparent; border: 0; color: #fff; cursor: pointer; }
+.sound-toggle svg { filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55)); }
 .sound-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-.top a { display: inline-flex; align-items: center; min-height: 48px; color: #fff; font-weight: 700; text-decoration: none; }
+.top a { display: inline-flex; align-items: center; min-height: 48px; color: #000; font-weight: 700; text-decoration: none; }
+.top .logo { min-height: 122px; flex: none; }
+.top .logo img { display: block; width: 200px; height: 122px; max-width: none; }
 main { max-width: 48rem; margin: 0 auto; padding: 1rem; }
 h1 { font-size: 1.5rem; margin: 0.5rem 0; }
 h2 { font-size: 1.15rem; }

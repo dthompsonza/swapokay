@@ -8,7 +8,9 @@ import { SoundService } from './core/sound.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <header class="top">
-      <a routerLink="/">SwapOkay</a>
+      <a routerLink="/" class="logo"><img src="swapokay-header.png" alt="SwapOkay" width="200" height="122" /></a>
+    </header>
+    <div class="controls">
       <button
         type="button"
         class="sound-toggle"
@@ -25,7 +27,7 @@ import { SoundService } from './core/sound.service';
           }
         </svg>
       </button>
-    </header>
+    </div>
     <main><router-outlet /></main>
   `,
 })
