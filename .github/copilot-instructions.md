@@ -33,6 +33,8 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
 - One-time manual repo setting: Settings → Pages → Source = "GitHub Actions".
 - Base href is passed only in CI; local `npm start`/`npm run build` keep `/`. Runtime asset/data URLs must stay relative (no leading `/`).
 
+## 2c. Analytics
+- Google Analytics (gtag, id `G-3CS5C4YKZQ`) is loaded by an inline script in `src/index.html` **only** when `location.hostname` is `swapokay.co.za` or `www.swapokay.co.za`. It is never loaded on localhost, GitHub Pages or Cloudflare Pages hosts. The gtag script tag is injected dynamically by that check (not present statically).
 ## 3. Domain terms
 - **CollectibleKind**: a type of collectible set (e.g. Checkers Stickables, code `CHK2026`, 50 items). Defined by JSON on the host server.
 - **Collectable** (home list entry): one entry per CollectibleKind.
@@ -220,4 +222,5 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-11-01: Collection page shows a centred "Showing X of Y items" line at the bottom (section 5.4).
 - 2026-11-02: `README.md` states the site was built with GitHub Copilot CLI (intro paragraph).
 - 2026-11-02: About page ends with a GitHub-logo link to the dthompsonza/swapokay repo (section 5c).
+- 2026-11-02: Added Google Analytics tag, loaded only on swapokay.co.za (section 2c).
 - 2026-11-01: About page reworded (explains counting + Show/Scan QR swapping, friendlier); Sponsors page reworded and gains a "Thanks" heading with the (empty) list beneath (section 5c).
