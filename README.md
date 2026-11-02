@@ -2,6 +2,8 @@
 
 Client-side Angular SPA for tracking collectible collections (e.g. Checkers Stickables 2026) and comparing them via QR code to find swaps. Data is stored in the browser's `localStorage`.
 
+This site was built with [GitHub Copilot CLI](https://github.com/features/copilot/cli).
+
 ## Run (Windows PowerShell)
 
 ```powershell
