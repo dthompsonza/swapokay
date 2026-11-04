@@ -33,6 +33,17 @@ export class CollectionStore {
     this.save([...this.all(), entry]);
   }
 
+  import(kind: string, name: string, counts: readonly number[], icon: string): void {
+    const entry: StoredCollection = {
+      kind,
+      name: name.trim(),
+      data: countsToBase64(counts),
+      icon,
+      updated: new Date().toISOString(),
+    };
+    this.save([...this.all(), entry]);
+  }
+
   setCount(kind: string, name: string, index: number, value: number): void {
     const current = this.get(kind, name);
     const counts = current && base64ToCounts(current.data);

@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SoundService } from './core/sound.service';
+import { ImportModal } from './shared/import-modal';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, ImportModal],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:keydown.escape)': 'menuOpen.set(false)',
@@ -32,10 +33,14 @@ import { SoundService } from './core/sound.service';
             <li><a routerLink="/" (click)="menuOpen.set(false)">Home</a></li>
             <li><a routerLink="/about" (click)="menuOpen.set(false)">About</a></li>
             <li><a routerLink="/sponsors" (click)="menuOpen.set(false)">Sponsors</a></li>
+            <li><button type="button" (click)="openImport()">Import</button></li>
           </ul>
         }
       </nav>
     </header>
+    @if (importOpen()) {
+      <app-import-modal (closed)="importOpen.set(false)" />
+    }
     <div class="controls">
       <button
         type="button"
@@ -60,7 +65,13 @@ import { SoundService } from './core/sound.service';
 export class App {
   protected readonly sound = inject(SoundService);
   protected readonly menuOpen = signal(false);
+  protected readonly importOpen = signal(false);
   private readonly host = inject(ElementRef<HTMLElement>);
+
+  protected openImport(): void {
+    this.menuOpen.set(false);
+    this.importOpen.set(true);
+  }
 
   protected onDocumentClick(event: Event): void {
     const nav = (this.host.nativeElement as HTMLElement).querySelector('.menu');

@@ -6,8 +6,8 @@ body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, san
 .menu-button:focus-visible { outline: 2px solid #0b5ed7; outline-offset: 2px; }
 .menu-text { display: none; }
 .menu-panel { position: absolute; right: 0; top: 100%; z-index: 10; margin: 0; padding: 0.25rem 0; list-style: none; min-width: 160px; background: #fff; border: 1px solid #ccc; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
-.top .menu-panel a { font-weight: 400; display: flex; align-items: center; min-height: 44px; padding: 0 1rem; color: #222; text-decoration: none; }
-.menu-panel a:hover, .menu-panel a:focus-visible { background: #eee; }
+.top .menu-panel a, .top .menu-panel button { font: inherit; font-weight: 400; display: flex; align-items: center; width: 100%; box-sizing: border-box; border: 0; background: none; cursor: pointer; min-height: 44px; padding: 0 1rem; color: #222; text-decoration: none; }
+.menu-panel a:hover, .menu-panel a:focus-visible, .menu-panel button:hover, .menu-panel button:focus-visible { background: #eee; }
 @media (min-width: 900px) {
   .menu-text { display: inline; }
   .burger { display: none; }
