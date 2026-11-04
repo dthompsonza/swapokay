@@ -56,6 +56,15 @@ export function encodeCollection(kind: string, name: string, counts: readonly nu
   return btoa([kind, name, icon].join(SEP)) + SEP + countsToBase64(counts);
 }
 
+export function peekKindCode(text: string): string | null {
+  try {
+    const header = atob(text.trim().split(SEP)[0]);
+    return header.split(SEP)[0] || null;
+  } catch {
+    return null;
+  }
+}
+
 export interface DecodedCollection {
   kind: string;
   name: string;

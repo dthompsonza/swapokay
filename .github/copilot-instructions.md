@@ -132,8 +132,10 @@ Client-side-only Angular SPA to capture collections of collectibles (counts per 
 6. **Scan QR / Compare**: opened from within a collection; scans via camera (fallback: paste the string). Decodes the other string, then:
    - If kind code differs from the current collection's kind → **reject with error message**.
    - If invalid/corrupt → error message.
-   - Otherwise show the result (see section 7).
+   - Otherwise show the result (see section 7). The result view shows, at the top, the current collection's icon and name and the compared-to collection's icon and name (small icon beside each name).
    - In the Scan QR modal the label "Or paste the collection code" is always on its own line (block-level, below the scan button).
+7. **Share link**: the Show QR modal has a **share icon button** (aria-label "Share link", min 44px); the collection page title row also has the same share icon button immediately to the right of the edit pencil (same behaviour, using the collection's encoded string; shows "Link copied!" beside it on clipboard fallback). that calls the Web Share API (`navigator.share`) with the URL `{origin}{pathname}?collection={encodeURIComponent(code)}` (query string before the hash; `code` = the Show QR/Scan QR string); if `navigator.share` is unavailable it copies the link to the clipboard and shows "Link copied!".
+8. **Shared collection modal**: on app start, if `?collection=` is present and decodes to a valid collection of a known kind, the app opens a modal (closing it removes the query param from the URL via `history.replaceState`). Content: at the top the collection icon (height exactly twice the name's text height: name font-size 1.1rem with line-height 1, icon 2.2rem) and the collection name; a summary `X/Y` (X = distinct items with count > 0, Y = total count, same as `collectionStats`); then a read-only grid of only the items with count > 0 (icon, count badge, name), with no filters, no tapping/editing. Invalid/unknown codes show an error message in the modal. If the device has one or more collections of the same kind, the modal title is **Compare to...** and it shows a dropdown (`select`) listing those collections by name plus a **Compare** button; pressing Compare opens the normal Scan QR/Compare modal for the selected collection with the shared code already compared (result shown immediately). Otherwise the title is "Shared collection".
 
 ## 5a. Sound toggle
 - The **controls bar** (section 5b, below the logo header) has a **speaker icon button** (right-aligned) (aria-label "Mute sounds"/"Unmute sounds", `aria-pressed`, min 44px). Enabled by default (speaker icon); pressing it toggles to muted (speaker with a line through it).
@@ -224,5 +226,8 @@ Rename/delete dialogs live inside the collection page using `modal`. Unit tests:
 - 2026-11-02: `README.md` states the site was built with GitHub Copilot CLI (intro paragraph).
 - 2026-11-02: About page ends with a GitHub-logo link to the dthompsonza/swapokay repo (section 5c).
 - 2026-11-02: Added Google Analytics tag, loaded only on swapokay.co.za (section 2c).
+- 2026-11-04: Compare result shows both collections' names and icons.
+- 2026-11-04: Share icon also added right of the edit pencil on the collection page.
+- 2026-11-04: Added share link button to Show QR and the shared-collection modal opened from `?collection=` links (sections 5.7, 5.8).
 - 2026-11-04: Added Import menu option and Import Collection modal (paste/enter a collection code; rejects duplicate names; inserts and goes to the kind's list) (section 5c).
 - 2026-11-01: About page reworded (explains counting + Show/Scan QR swapping, friendlier); Sponsors page reworded and gains a "Thanks" heading with the (empty) list beneath (section 5c).

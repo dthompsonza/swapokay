@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, input, output, signal } from '@angular/core';
 import * as QRCode from 'qrcode';
 import { iconPath } from '../core/collection-icons';
+import { shareCollectionLink } from '../core/share';
 import { Modal } from './modal';
 
 @Component({
@@ -15,13 +16,27 @@ import { Modal } from './modal';
           <img [src]="url" alt="QR code for this collection" />
         }
         <pre>{{ text() }}</pre>
-        <button type="button" class="btn" (click)="copy()">{{ copied() ? 'Copied!' : 'Copy code' }}</button>
+        <div class="actions">
+          <button type="button" class="btn" (click)="copy()">{{ copied() ? 'Copied!' : 'Copy code' }}</button>
+          <button type="button" class="share" aria-label="Share link" (click)="share()">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+              <path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" />
+            </svg>
+          </button>
+        </div>
+        @if (linkCopied()) {
+          <p class="note">Link copied!</p>
+        }
       </div>
     </app-modal>
   `,
   styles: `
     .body { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
     h2 { margin: 0; font-size: 1.1rem; }
+    .actions { display: flex; align-items: center; gap: 0.5rem; }
+    .share { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 0; background: none; cursor: pointer; color: #222; }
+    .note { margin: 0; color: #555; font-size: 0.9rem; }
     img { width: min(80vw, 18rem); height: auto; image-rendering: pixelated; }
     pre { margin: 0; padding: 5px; border: 1px solid #bbb; box-sizing: border-box; max-width: 100%; font-family: ui-monospace, Consolas, monospace; font-size: 0.75rem; white-space: pre-wrap; word-break: break-all; text-align: center; }
   `,
@@ -32,6 +47,11 @@ export class QrShow implements OnInit {
   readonly closed = output<void>();
   protected readonly dataUrl = signal('');
   protected readonly copied = signal(false);
+  protected readonly linkCopied = signal(false);
+
+  protected async share(): Promise<void> {
+    if ((await shareCollectionLink(this.text())) === 'copied') this.linkCopied.set(true);
+  }
 
   async ngOnInit(): Promise<void> {
     const size = 400;

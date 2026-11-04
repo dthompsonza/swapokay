@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { decodeCollection } from '../core/collection-codec';
+import { decodeCollection, peekKindCode } from '../core/collection-codec';
 import { CollectionStore } from '../core/collection-store';
 import { KindService } from '../core/kind.service';
 import { Modal } from './modal';
@@ -51,7 +51,7 @@ export class ImportModal {
 
   protected async import(): Promise<void> {
     const raw = this.text().trim();
-    const kindCode = this.kindCodeOf(raw);
+    const kindCode = peekKindCode(raw);
     if (!kindCode) return this.error.set('This is not a valid collection code.');
     let itemCount: number;
     try {
@@ -69,14 +69,5 @@ export class ImportModal {
     this.store.import(kind, name, counts, icon);
     this.closed.emit();
     await this.router.navigate(['/kind', kind]);
-  }
-
-  private kindCodeOf(raw: string): string | null {
-    try {
-      const header = atob(raw.split('^')[0]);
-      return header.split('^')[0] || null;
-    } catch {
-      return null;
-    }
   }
 }

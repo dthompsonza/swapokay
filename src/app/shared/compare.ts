@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, computed, input, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, computed, input, output, signal, viewChild } from '@angular/core';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 import { decodeCollection } from '../core/collection-codec';
+import { iconPath } from '../core/collection-icons';
 import { CollectibleItem, itemLabel } from '../core/models';
 import { SwapResult, computeSwap } from '../core/swap-diff';
 import { Modal } from './modal';
@@ -13,7 +14,11 @@ import { Modal } from './modal';
     <app-modal title="Compare collections" (closed)="closed.emit()">
       <h2>Compare with another collection</h2>
       @if (result(); as r) {
-        <p class="other">Compared with <strong>{{ otherName() }}</strong></p>
+        <div class="pair">
+          <span class="who"><img [src]="mineIconSrc()" alt="" /><strong>{{ mineName() }}</strong></span>
+          <span aria-hidden="true">⇄</span>
+          <span class="who"><img [src]="otherIconSrc()" alt="" /><strong>{{ otherName() }}</strong></span>
+        </div>
         <p>Possible swaps: <strong>{{ r.swaps }}</strong></p>
         <h3>You can give ({{ r.give.length }})</h3>
         @for (e of r.give; track e.item.code) {
@@ -55,14 +60,22 @@ import { Modal } from './modal';
     .row span { flex: 1; }
     .muted { color: #666; margin: 0.25rem 0; }
     .error { color: #b00020; }
-    .other { margin: 0; }
+    .pair { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .who { display: inline-flex; align-items: center; gap: 0.35rem; }
+    .who img { width: 1.75rem; height: 1.75rem; }
   `,
 })
-export class Compare implements OnDestroy {
+export class Compare implements OnInit, OnDestroy {
   protected readonly label = itemLabel;
   readonly kindCode = input.required<string>();
   readonly items = input.required<CollectibleItem[]>();
   readonly mine = input.required<number[]>();
+  readonly initialCode = input('');
+  readonly mineName = input('');
+  readonly mineIcon = input('');
+  protected readonly mineIconSrc = computed(() => iconPath(this.mineIcon()));
+  protected readonly otherIcon = signal('');
+  protected readonly otherIconSrc = computed(() => iconPath(this.otherIcon()));
   readonly closed = output<void>();
 
   protected readonly pasted = signal('');
@@ -73,6 +86,10 @@ export class Compare implements OnDestroy {
   private readonly video = viewChild<ElementRef<HTMLVideoElement>>('video');
   private controls?: IScannerControls;
   private readonly itemCount = computed(() => this.items().length);
+
+  ngOnInit(): void {
+    if (this.initialCode()) this.compare(this.initialCode());
+  }
 
   async startScan(): Promise<void> {
     this.error.set('');
@@ -108,6 +125,7 @@ export class Compare implements OnDestroy {
     }
     this.error.set('');
     this.otherName.set(decoded.value.name);
+    this.otherIcon.set(decoded.value.icon);
     this.result.set(computeSwap(this.items(), this.mine(), decoded.value.counts));
   }
 

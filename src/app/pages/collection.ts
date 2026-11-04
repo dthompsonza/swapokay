@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { COUNT_MAX, NAME_MAX, base64ToCounts, collectionStats, padCounts, validateName } from '../core/collection-codec';
 import { iconPath, randomIcon } from '../core/collection-icons';
 import { CollectionStore } from '../core/collection-store';
+import { shareCollectionLink } from '../core/share';
 import { KindService } from '../core/kind.service';
 import { SoundService } from '../core/sound.service';
 import { CollectibleKind, itemLabel } from '../core/models';
@@ -36,6 +37,15 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
         <img class="cicon" [src]="iconSrc()" alt="" />
         <span>{{ name() }}</span>
         <button type="button" class="pencil" aria-label="Edit collection" (click)="openEdit()">✎</button>
+        <button type="button" class="pencil" aria-label="Share link" (click)="shareLink()">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+            <path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" />
+          </svg>
+        </button>
+        @if (linkCopied()) {
+          <span class="copied" role="status">Link copied!</span>
+        }
       </h1>
       <p class="stats" aria-label="Unique items out of total items">{{ stats() }}</p>
       <div class="actions">
@@ -83,7 +93,7 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
           <app-qr-show [text]="encoded()" [icon]="collection()?.icon ?? ''" (closed)="dialog.set(null)" />
         }
         @case ('compare') {
-          <app-compare [kindCode]="code()" [items]="k.items" [mine]="counts()" (closed)="dialog.set(null)" />
+          <app-compare [kindCode]="code()" [items]="k.items" [mine]="counts()" [mineName]="name()" [mineIcon]="collection()?.icon ?? ''" (closed)="dialog.set(null)" />
         }
         @case ('edit') {
           <app-modal title="Edit collection" (closed)="dialog.set(null)">
@@ -140,7 +150,8 @@ type Dialog = 'qr' | 'compare' | 'edit' | 'delete' | null;
     .title { display: flex; align-items: center; gap: 0.5rem; }
     .cicon { width: 2.5rem; height: 2.5rem; }
     .stats { margin: -0.5rem 0 1rem; font-size: 0.85rem; color: #555; }
-    .pencil { width: 44px; height: 44px; border: 0; background: none; font-size: 1.4rem; cursor: pointer; }
+    .pencil { width: 44px; height: 44px; border: 0; background: none; font-size: 1.4rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: inherit; }
+    .copied { font-size: 0.85rem; font-weight: 400; color: #555; }
     .namerow { display: flex; gap: 0.5rem; align-items: center; }
     .namerow input { flex: 1; min-width: 0; }
     .trash { width: 44px; height: 44px; border: 0; background: none; font-size: 1.4rem; cursor: pointer; }
@@ -159,6 +170,11 @@ export class CollectionPage {
   protected readonly kind = signal<CollectibleKind | null>(null);
   protected readonly error = signal('');
   protected readonly dialog = signal<Dialog>(null);
+  protected readonly linkCopied = signal(false);
+
+  protected async shareLink(): Promise<void> {
+    if ((await shareCollectionLink(this.encoded())) === 'copied') this.linkCopied.set(true);
+  }
   protected readonly selected = signal<number | null>(null);
   protected readonly flashIndex = signal<number | null>(null);
   protected readonly variantFilter = signal<VariantFilter>('none');

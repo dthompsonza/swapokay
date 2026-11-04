@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SoundService } from './core/sound.service';
 import { ImportModal } from './shared/import-modal';
+import { SharedCollection } from './shared/shared-collection';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, ImportModal],
+  imports: [RouterOutlet, RouterLink, ImportModal, SharedCollection],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:keydown.escape)': 'menuOpen.set(false)',
@@ -41,6 +42,9 @@ import { ImportModal } from './shared/import-modal';
     @if (importOpen()) {
       <app-import-modal (closed)="importOpen.set(false)" />
     }
+    @if (sharedCode(); as code) {
+      <app-shared-collection [code]="code" (closed)="closeShared()" />
+    }
     <div class="controls">
       <button
         type="button"
@@ -66,6 +70,14 @@ export class App {
   protected readonly sound = inject(SoundService);
   protected readonly menuOpen = signal(false);
   protected readonly importOpen = signal(false);
+  protected readonly sharedCode = signal(new URLSearchParams(location.search).get('collection') ?? '');
+
+  protected closeShared(): void {
+    this.sharedCode.set('');
+    const url = new URL(location.href);
+    url.searchParams.delete('collection');
+    history.replaceState(null, '', url);
+  }
   private readonly host = inject(ElementRef<HTMLElement>);
 
   protected openImport(): void {
